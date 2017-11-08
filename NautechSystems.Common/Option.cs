@@ -19,13 +19,15 @@ namespace NautechSystems.Common
     [Immutable]
     public struct Option<T> : IEquatable<Option<T>>
     {
+        private readonly T value;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="Option{T}"/> struct.
         /// </summary>
         /// <param name="value">The value.</param>
         private Option(T value)
         {
-            this.Value = value;
+            this.value = value;
         }
 
         /// <summary>
@@ -37,12 +39,12 @@ namespace NautechSystems.Common
         /// <summary>
         /// Gets the value of the <see cref="Option{T}"/>.
         /// </summary>
-        public T Value { get; }
+        public T Value => this.GetValue();
 
         /// <summary>
         /// Returns a <see cref="bool"/> indicating whether the <see cref="Option{T}"/> has a value.
         /// </summary>
-        public bool HasValue => this.Value != null;
+        public bool HasValue => this.value != null;
 
         /// <summary>
         /// Returns a <see cref="bool"/> indicating whether the <see cref="Option{T}"/> has NO value.
@@ -77,7 +79,7 @@ namespace NautechSystems.Common
         /// <returns>A <see cref="bool"/></returns>
         public static bool operator ==(Option<T> option, T value)
         {
-            return !option.HasNoValue && option.Value.Equals(value);
+            return !option.HasNoValue && option.value.Equals(value);
         }
 
         /// <summary>
@@ -152,7 +154,7 @@ namespace NautechSystems.Common
                 return false;
             }
 
-            return this.Value.Equals(other.Value);
+            return this.value.Equals(other.Value);
         }
 
         /// <summary>
@@ -166,7 +168,7 @@ namespace NautechSystems.Common
                 return 0;
             }
 
-            return this.Value.GetHashCode();
+            return this.value.GetHashCode();
         }
 
         /// <summary>
@@ -180,7 +182,17 @@ namespace NautechSystems.Common
                 return nameof(this.HasNoValue);
             }
 
-            return this.Value.ToString();
+            return this.value.ToString();
+        }
+
+        private T GetValue()
+        {
+            if (this.HasValue)
+            {
+                return this.value;
+            }
+
+            throw new InvalidOperationException("Option has no value.");
         }
     }
 }
