@@ -12,10 +12,12 @@ namespace NautechSystems.Common.Validation
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using NautechSystems.Common.Annotations;
 
     /// <summary>
-    /// The static <see cref="Validate"/> class.
+    /// The immutable static <see cref="Validate"/> class.
     /// </summary>
+    [Immutable]
     public static class Validate
     {
         private const string ExMessage = "Validation Failed";

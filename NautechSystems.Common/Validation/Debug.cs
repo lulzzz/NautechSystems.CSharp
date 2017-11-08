@@ -12,10 +12,12 @@ namespace NautechSystems.Common.Validation
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using NautechSystems.Common.Annotations;
 
     /// <summary>
-    /// The static <see cref="Debug"/> class.
+    /// The immutable static <see cref="Debug"/> class.
     /// </summary>
+    [Immutable]
     public static class Debug
     {
         /// <summary>

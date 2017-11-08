@@ -13,7 +13,7 @@ namespace NautechSystems.Common
     using NautechSystems.Common.Annotations;
 
     /// <summary>
-    /// The option immutable structure. Wraps a potentially null value.
+    /// The immutable option structure. Wraps a potentially null value.
     /// </summary>
     /// <typeparam name="T">The option type.</typeparam>
     [Immutable]
