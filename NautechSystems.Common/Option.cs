@@ -1,7 +1,9 @@
 ﻿// -------------------------------------------------------------------------------------------------
 // <copyright file="Option.cs" company="Nautech Systems Pty Ltd.">
-//   Copyright (C) 2015-2017 Nautech Systems Pty Ltd. All rights reserved.
-//   http://www.nautechsystems.net
+//   Copyright (C) 2017. All rights reserved.
+//   https://github.com/nautechsystems/NautechSystems.Common
+//   the use of this source code is governed by the Apache 2.0 license
+//   as found in the LICENSE.txt file.
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 

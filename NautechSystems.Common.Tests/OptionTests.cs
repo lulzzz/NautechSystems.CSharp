@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------------
-// <copyright file="DecimalExtensionsTests.cs" company="Nautech Systems Pty Ltd.">
+// <copyright file="OptionTests.cs" company="Nautech Systems Pty Ltd.">
 //   Copyright (C) 2017. All rights reserved.
 //   https://github.com/nautechsystems/NautechSystems.Common
 //   the use of this source code is governed by the Apache 2.0 license
@@ -7,29 +7,38 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-namespace NautechSystems.Common.Tests.ExtensionsTests
+namespace NautechSystems.Common.Tests
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
-    using NautechSystems.Common.Extensions;
     using Xunit;
 
     [SuppressMessage("StyleCop.CSharp.NamingRules", "*", Justification = "Reviewed. Suppression is OK within the Test Suite.")]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed. Suppression is OK within the Test Suite.")]
-    public class DecimalExtensionsTests
+    public class OptionTests
     {
-        [Theory]
-        [InlineData(1, 0.1)]
-        [InlineData(3, 0.001)]
-        [InlineData(5, 0.00001)]
-        internal void GetTickSizeFromInt_VariousInputs_ReturnsExpectedDecimal(int fromInt, decimal expectedResult)
+        [Fact]
+        internal void None_WhenString_ReturnsOptionWithNoValue()
         {
             // Arrange
-
             // Act
-            var result = fromInt.ToTickSize();
+            var result = Option<string>.None;
 
             // Assert
-            Assert.Equal(expectedResult, result);
+            Assert.True(result.HasNoValue);
+            Assert.False(result.HasValue);
+        }
+
+        [Fact]
+        internal void None_WhenNullableStruct_ReturnsOptionWithNoValue()
+        {
+            // Arrange
+            // Act
+            var result = Option<DateTime?>.None;
+
+            // Assert
+            Assert.True(result.HasNoValue);
+            Assert.False(result.HasValue);
         }
     }
 }
