@@ -50,7 +50,7 @@ namespace NautechSystems.CSharp.Tests
         {
             // Arrange
             // Act
-            var result = Option<TestClass>.None;
+            var result = Option<TestClass>.None();
 
             // Assert
             Assert.True(result.HasNoValue);
@@ -62,7 +62,7 @@ namespace NautechSystems.CSharp.Tests
         {
             // Arrange
             // Act
-            var result = Option<DateTime?>.None;
+            var result = Option<DateTime?>.None();
 
             // Assert
             Assert.True(result.HasNoValue);
@@ -86,7 +86,7 @@ namespace NautechSystems.CSharp.Tests
             var time = new DateTime(2000, 1, 1);
 
             // Act
-            var result = Option<DateTime>.From(time);
+            var result = Option<DateTime>.Some(time);
 
             // Assert
             Assert.Equal(time, result.Value);
@@ -97,7 +97,7 @@ namespace NautechSystems.CSharp.Tests
         {
             // Arrange
             Option<TestClass> option1 = null;
-            Option<TestClass> option2 = Option<TestClass>.None;
+            Option<TestClass> option2 = Option<TestClass>.None();
 
             // Act
             var result = option1.Equals(option2);
@@ -110,8 +110,8 @@ namespace NautechSystems.CSharp.Tests
         internal void Equals_WhenOneOptionNull_ReturnsFalse()
         {
             // Arrange
-            var option1 = Option<TestClass>.From(new TestClass());
-            var option2 = Option<TestClass>.None;
+            var option1 = Option<TestClass>.Some(new TestClass());
+            var option2 = Option<TestClass>.None();
 
             // Act
             var result = option1.Equals(option2);
@@ -127,8 +127,8 @@ namespace NautechSystems.CSharp.Tests
             var dateTime1 = new DateTime(2000, 1, 1);
             var dateTime2 = new DateTime(2000, 1, 1);
 
-            var option1 = Option<DateTime>.From(dateTime1);
-            var option2 = Option<DateTime>.From(dateTime2);
+            var option1 = Option<DateTime>.Some(dateTime1);
+            var option2 = Option<DateTime>.Some(dateTime2);
 
             // Act - Ignore suspcicious comparison warning (this is to call the equals overrride).
             var result1 = option1.Equals((object)option2);
@@ -154,8 +154,8 @@ namespace NautechSystems.CSharp.Tests
             var dateTime1 = new DateTime(2000, 1, 1);
             var dateTime2 = new DateTime(2000, 1, 2);
 
-            var option1 = Option<DateTime>.From(dateTime1);
-            var option2 = Option<DateTime>.From(dateTime2);
+            var option1 = Option<DateTime>.Some(dateTime1);
+            var option2 = Option<DateTime>.Some(dateTime2);
 
             // Act - Ignore suspcicious comparison warning (this is to call the equals overrride).
             var result1 = option1.Equals((object)option2);
@@ -178,7 +178,7 @@ namespace NautechSystems.CSharp.Tests
         internal void Equals_WithString_ReturnsFalse()
         {
             // Arrange
-            var option = Option<TestClass>.From(new TestClass());
+            var option = Option<TestClass>.Some(new TestClass());
 
             // Act - Ignore suspcious comparison warning (this is part of the test).
             var result = option.Equals("string");
@@ -204,7 +204,7 @@ namespace NautechSystems.CSharp.Tests
         internal void GetHashCode_WithValue_ReturnsExpectedInt()
         {
             // Arrange
-            var option = Option<TestClass>.From(new TestClass());
+            var option = Option<TestClass>.Some(new TestClass());
 
             // Act
             var result = option.GetHashCode();

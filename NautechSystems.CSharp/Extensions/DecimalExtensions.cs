@@ -19,11 +19,11 @@ namespace NautechSystems.CSharp.Extensions
     public static class DecimalExtensions
     {
         /// <summary>
-        /// Returns the number of decimal places of the given decimal number.
+        /// Returns the number of decimal places of this decimal number.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns> An <see cref="int"/>.</returns>
-        public static int DecimalPlaces(this decimal value)
+        public static int GetDecimalPlaces(this decimal value)
         {
             return BitConverter.GetBytes(decimal.GetBits(value)[3])[2];
         }

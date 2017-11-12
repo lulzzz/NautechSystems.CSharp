@@ -31,12 +31,6 @@ namespace NautechSystems.CSharp
         }
 
         /// <summary>
-        /// Returns an <see cref="Option{T}"/> with no value.
-        /// </summary>
-        /// <returns>An <see cref="Option{T}"/>.</returns>
-        public static Option<T> None => new Option<T>();
-
-        /// <summary>
         /// Gets the value of the <see cref="Option{T}"/>.
         /// </summary>
         public T Value => this.GetValue();
@@ -52,11 +46,17 @@ namespace NautechSystems.CSharp
         public bool HasNoValue => !this.HasValue;
 
         /// <summary>
+        /// Returns an <see cref="Option{T}"/> with no value.
+        /// </summary>
+        /// <returns>An <see cref="Option{T}"/>.</returns>
+        public static Option<T> None() => new Option<T>();
+
+        /// <summary>
         /// Returns the given object wrapped in an <see cref="Option{T}"/>.
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns>An <see cref="Option{T}"/>.</returns>
-        public static Option<T> From(T obj)
+        public static Option<T> Some(T obj)
         {
             return new Option<T>(obj);
         }
@@ -192,7 +192,7 @@ namespace NautechSystems.CSharp
                 return this.value;
             }
 
-            throw new InvalidOperationException("Option has no value.");
+            throw new InvalidOperationException("Cannot get value (there is no value).");
         }
     }
 }

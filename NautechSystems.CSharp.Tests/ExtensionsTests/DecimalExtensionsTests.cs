@@ -18,10 +18,34 @@ namespace NautechSystems.CSharp.Tests.ExtensionsTests
     public class DecimalExtensionsTests
     {
         [Theory]
+        [InlineData(0, 0)]
+        [InlineData(0.1, 1)]
+        [InlineData(0.01, 2)]
+        [InlineData(0.001, 3)]
+        [InlineData(0.0001, 4)]
+        [InlineData(0.00001, 5)]
+        [InlineData(0.000001, 6)]
+        [InlineData(0.0000001, 7)]
+        [InlineData(0.00000001, 8)]
+        [InlineData(0.000000001, 9)]
+        [InlineData(0.0000000001, 10)]
+        internal void GetDecimalPlaces_VariousInputs_ReturnsExpectedInt(decimal value, int expected)
+        {
+            // Arrange
+            var number = value;
+
+            // Act
+            var result = number.GetDecimalPlaces();
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
         [InlineData(1, 0.1)]
         [InlineData(3, 0.001)]
         [InlineData(5, 0.00001)]
-        internal void GetTickSizeFromInt_VariousInputs_ReturnsExpectedDecimal(int fromInt, decimal expectedResult)
+        internal void GetTickSizeFromInt_VariousInputs_ReturnsExpectedDecimal(int fromInt, decimal expected)
         {
             // Arrange
 
@@ -29,7 +53,7 @@ namespace NautechSystems.CSharp.Tests.ExtensionsTests
             var result = fromInt.ToTickSize();
 
             // Assert
-            Assert.Equal(expectedResult, result);
+            Assert.Equal(expected, result);
         }
     }
 }

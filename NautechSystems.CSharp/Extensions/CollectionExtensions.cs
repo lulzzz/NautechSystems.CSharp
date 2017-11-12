@@ -12,7 +12,6 @@ namespace NautechSystems.CSharp.Extensions
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
     using NautechSystems.CSharp.Annotations;
     using NautechSystems.CSharp.Validation;
 
@@ -23,24 +22,17 @@ namespace NautechSystems.CSharp.Extensions
     public static class CollectionExtensions
     {
         /// <summary>
-        /// Returns a boolean indication whether the collections count is zero.
-        /// </summary>
-        /// <param name="collection">The collection.</param>
-        /// <typeparam name="T">The collection type.</typeparam>
-        /// <returns>A <see cref="bool"/>.</returns>
-        public static bool IsCountZero<T>(this ICollection<T> collection)
-        {
-            return collection.Count == 0;
-        }
-
-        /// <summary>
-        /// Returns the value of the last collection index (if collection empty returns -1).
+        /// Returns the value of the last collection index.
         /// </summary>
         /// <param name="collection">The collection.</param>
         /// <typeparam name="T">The collection type.</typeparam>
         /// <returns>An <see cref="int"/>.</returns>
+        /// <exception cref="ArgumentNullException">Throws if collection is null.</exception>
+        /// <exception cref="ArgumentException">Throws if collection is empty.</exception>
         public static int LastIndex<T>(this ICollection<T> collection)
         {
+            Validate.CollectionNotNullOrEmpty(collection, nameof(collection));
+
             return collection.Count - 1;
         }
 
@@ -51,9 +43,13 @@ namespace NautechSystems.CSharp.Extensions
         /// <param name="index">The index.</param>
         /// <typeparam name="T">The collection type.</typeparam>
         /// <returns>The element type.</returns>
+        /// <exception cref="ArgumentNullException">Throws if collection null.</exception>
+        /// <exception cref="ArgumentException">Throws if collection empty.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Throws if index out of range.</exception>
         public static T GetByReverseIndex<T>(this ICollection<T> collection, int index)
         {
-            Validate.Int32NotOutOfRange(index, nameof(index), 0, int.MaxValue);
+            Validate.CollectionNotNullOrEmpty(collection, nameof(collection));
+            Validate.Int32NotOutOfRange(index, nameof(index), 0, collection.LastIndex());
 
             return collection.ElementAtOrDefault(collection.LastIndex() - index);
         }
@@ -66,12 +62,20 @@ namespace NautechSystems.CSharp.Extensions
         /// <param name="shift">The shift.</param>
         /// <typeparam name="T">The collection type.</typeparam>
         /// <returns>The element type.</returns>
+        /// <exception cref="ArgumentNullException">Throws if collection null.</exception>
+        /// <exception cref="ArgumentException">Throws if collection empty.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Throws if index out of range.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Throws if shift out of range.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Throws if index + shift is greater than 
+        /// collection count.</exception>
         public static T GetByShiftedReverseIndex<T>(this ICollection<T> collection, int index, int shift)
         {
-            Validate.Int32NotOutOfRange(index, nameof(index), 0, int.MaxValue);
-            Validate.Int32NotOutOfRange(shift, nameof(shift), 0, int.MaxValue);
+            Validate.CollectionNotNullOrEmpty(collection, nameof(collection));
+            Validate.Int32NotOutOfRange(index, nameof(index), 0, collection.LastIndex());
+            Validate.Int32NotOutOfRange(shift, nameof(shift), 0, collection.LastIndex());
+            Validate.Int32NotOutOfRange(index + shift, nameof(index) + nameof(shift), 0, collection.LastIndex());
 
-            return collection.ElementAtOrDefault(collection.LastIndex() - index - shift);
+            return collection.ElementAt(collection.LastIndex() - index - shift);
         }
 
         /// <summary>
@@ -80,8 +84,13 @@ namespace NautechSystems.CSharp.Extensions
         /// <param name="source">The source.</param>
         /// <param name="action">The action.</param>
         /// <typeparam name="T">The type.</typeparam>
+        /// <exception cref="ArgumentNullException">Throws if source collection null.</exception>
+        /// <exception cref="ArgumentNullException">Throws if action null.</exception>
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
+            Validate.NotNull(source, nameof(source));
+            Validate.NotNull(action, nameof(action));
+
             foreach (var element in source)
             {
                 action(element);
