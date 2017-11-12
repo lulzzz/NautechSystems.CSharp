@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------------
-// <copyright file="Debug.cs" company="Nautech Systems Pty Ltd.">
+// <copyright file="Validate.cs" company="Nautech Systems Pty Ltd.">
 //   Copyright (C) 2017. All rights reserved.
 //   https://github.com/nautechsystems/NautechSystems.Common
 //   the use of this source code is governed by the Apache 2.0 license
@@ -7,32 +7,35 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-namespace NautechSystems.Common.Validation
+namespace NautechSystems.CSharp.Validation
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using NautechSystems.Common.Annotations;
+    using NautechSystems.CSharp.Annotations;
 
     /// <summary>
-    /// The immutable static <see cref="Debug"/> class.
+    /// The immutable static <see cref="Validate"/> class.
     /// </summary>
     [Immutable]
-    public static class Debug
+    public static class Validate
     {
+        private const string ExMessage = "Validation Failed";
+
         /// <summary>
         /// The validation passes if the predicate is true.
         /// </summary>
         /// <param name="predicate">The predicate.</param>
         /// <param name="paramName">The parameter name.</param>
         /// <exception cref="ArgumentException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void True(bool predicate, string paramName)
         {
-#if DEBUG
-            Validate.True(predicate, paramName);
-#endif
+            if (!predicate)
+            {
+                throw new ArgumentException(
+                    $"{ExMessage} (The predicate based on {paramName} is false).", paramName);
+            }
         }
 
         /// <summary>
@@ -42,13 +45,14 @@ namespace NautechSystems.Common.Validation
         /// <param name="predicate">The predicate.</param>
         /// <param name="paramName">The parameter name.</param>
         /// <exception cref="ArgumentException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void TrueIf(bool condition, bool predicate, string paramName)
         {
-#if DEBUG
-            Validate.TrueIf(condition, predicate, paramName);
-#endif
+            if (condition && !predicate)
+            {
+                throw new ArgumentException(
+                    $"{ExMessage} (The conditional predicate based on {paramName} is false).", paramName);
+            }
         }
 
         /// <summary>
@@ -58,13 +62,14 @@ namespace NautechSystems.Common.Validation
         /// <param name="paramName">The parameter name.</param>
         /// <typeparam name="T">The arguments type.</typeparam>
         /// <exception cref="ArgumentNullException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void NotNull<T>(T argument, string paramName)
         {
-#if DEBUG
-            Validate.NotNull(argument, paramName);
-#endif
+            if (argument == null)
+            {
+                throw new ArgumentNullException(
+                    paramName, $"{ExMessage} (The {paramName} argument is null).");
+            }
         }
 
         /// <summary>
@@ -73,13 +78,14 @@ namespace NautechSystems.Common.Validation
         /// <param name="argument">The string argument.</param>
         /// <param name="paramName">The parameter name.</param>
         /// <exception cref="ArgumentException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void NotNull(string argument, string paramName)
         {
-#if DEBUG
-            Validate.NotNull(argument, paramName);
-#endif
+            if (string.IsNullOrWhiteSpace(argument))
+            {
+                throw new ArgumentNullException(
+                    paramName, $"{ExMessage} (The {paramName} string argument is null or white space).");
+            }
         }
 
         /// <summary>
@@ -90,13 +96,20 @@ namespace NautechSystems.Common.Validation
         /// <typeparam name="T">he type of collection.</typeparam>
         /// <exception cref="ArgumentNullException">Throws if validation fails.</exception>
         /// <exception cref="ArgumentException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void CollectionNotNullOrEmpty<T>(ICollection<T> collection, string paramName)
         {
-#if DEBUG
-            Validate.CollectionNotNullOrEmpty(collection, paramName);
-#endif
+            if (collection == null)
+            {
+                throw new ArgumentNullException(
+                    paramName, $"{ExMessage} (The {paramName} collection is null).");
+            }
+
+            if (collection.Count == 0)
+            {
+                throw new ArgumentException(
+                    $"{ExMessage} (The {paramName} collection is empty).", paramName);
+            }
         }
 
         /// <summary>
@@ -107,13 +120,20 @@ namespace NautechSystems.Common.Validation
         /// <typeparam name="T">The type of collection.</typeparam>
         /// <exception cref="ArgumentNullException">Throws if validation fails.</exception>
         /// <exception cref="ArgumentException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void CollectionEmpty<T>(ICollection<T> collection, string paramName)
         {
-#if DEBUG
-            Validate.CollectionEmpty(collection, paramName);
-#endif
+            if (collection == null)
+            {
+                throw new ArgumentNullException(
+                    paramName, $"{ExMessage} (The {paramName} collection is null).");
+            }
+
+            if (collection.Count != 0)
+            {
+                throw new ArgumentException(
+                    $"{ExMessage} (The {paramName} collection is not empty).", paramName);
+            }
         }
 
         /// <summary>
@@ -124,13 +144,14 @@ namespace NautechSystems.Common.Validation
         /// <param name="collection">The collection.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
         /// <exception cref="ArgumentException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void CollectionContains<T>(T element, string paramName, ICollection<T> collection)
         {
-#if DEBUG
-            Validate.CollectionContains(element, paramName, collection);
-#endif
+            if (!collection.Contains(element))
+            {
+                throw new ArgumentException(
+                    $"{ExMessage} (The collection does not contain the {paramName} element).", paramName);
+            }
         }
 
         /// <summary>
@@ -141,13 +162,14 @@ namespace NautechSystems.Common.Validation
         /// <param name="collection">The collection.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
         /// <exception cref="ArgumentException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void CollectionDoesNotContain<T>(T element, string paramName, ICollection<T> collection)
         {
-#if DEBUG
-            Validate.CollectionDoesNotContain(element, paramName, collection);
-#endif
+            if (collection.Contains(element))
+            {
+                throw new ArgumentException(
+                    $"{ExMessage} (The collection already contains the {paramName} element).", paramName);
+            }
         }
 
         /// <summary>
@@ -159,13 +181,14 @@ namespace NautechSystems.Common.Validation
         /// <typeparam name="T1">The type of the keys.</typeparam>
         /// <typeparam name="T2">The type of the values</typeparam>
         /// <exception cref="ArgumentException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void DictionaryContainsKey<T1, T2>(T1 key, string paramName, IDictionary<T1, T2> collection)
         {
-#if DEBUG
-            Validate.DictionaryContainsKey(key, paramName, collection);
-#endif
+            if (!collection.ContainsKey(key))
+            {
+                throw new ArgumentException(
+                    $"{ExMessage} (The collection does not contain the {paramName} element).", paramName);
+            }
         }
 
         /// <summary>
@@ -177,13 +200,14 @@ namespace NautechSystems.Common.Validation
         /// <typeparam name="T1">The type of the keys.</typeparam>
         /// <typeparam name="T2">The type of the values.</typeparam>
         /// <exception cref="ArgumentException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void DictionaryDoesNotContainKey<T1, T2>(T1 key, string paramName, IDictionary<T1, T2> collection)
         {
-#if DEBUG
-            Validate.DictionaryDoesNotContainKey(key, paramName, collection);
-#endif
+            if (collection.ContainsKey(key))
+            {
+                throw new ArgumentException(
+                    $"{ExMessage} (The collection already contains the {paramName} element).", paramName);
+            }
         }
 
         /// <summary>
@@ -193,13 +217,14 @@ namespace NautechSystems.Common.Validation
         /// <param name="paramName">The parameter name.</param>
         /// <param name="objNotToEqual">The other object not to equal.</param>
         /// <exception cref="ArgumentException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void NotEqualTo(object obj, string paramName, object objNotToEqual)
         {
-#if DEBUG
-            Validate.NotEqualTo(obj, paramName, objNotToEqual);
-#endif
+            if (obj.Equals(objNotToEqual))
+            {
+                throw new ArgumentException(
+                    $"{ExMessage} (The {paramName} should not be equal to {objNotToEqual}. Value = {obj}).", paramName);
+            }
         }
 
         /// <summary>
@@ -209,13 +234,14 @@ namespace NautechSystems.Common.Validation
         /// <param name="paramName">The parameter name.</param>
         /// <param name="objToEqual">The other object to be equal to.</param>
         /// <exception cref="ArgumentException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void EqualTo(object obj, string paramName, object objToEqual)
         {
-#if DEBUG
-            Validate.EqualTo(obj, paramName, objToEqual);
-#endif
+            if (!obj.Equals(objToEqual))
+            {
+                throw new ArgumentException(
+                    $"{ExMessage} (The {paramName} should be equal to {objToEqual}. Value = {obj}).", paramName);
+            }
         }
 
         /// <summary>
@@ -227,7 +253,6 @@ namespace NautechSystems.Common.Validation
         /// <param name="upperBound">The range upper bound.</param>
         /// <param name="endPoints">The range end points literal.</param>
         /// <exception cref="ArgumentOutOfRangeException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void Int32NotOutOfRange(
             int value,
@@ -236,9 +261,40 @@ namespace NautechSystems.Common.Validation
             int upperBound,
             RangeEndPoints endPoints = RangeEndPoints.Inclusive)
         {
-#if DEBUG
-            Validate.Int32NotOutOfRange(value, paramName, lowerBound, upperBound, endPoints);
-#endif
+            switch (endPoints)
+            {
+                case RangeEndPoints.Inclusive:
+                    if (value < lowerBound || value > upperBound)
+                    {
+                        throw new ArgumentOutOfRangeException(
+                            paramName, $"{ExMessage} (The {paramName} is not within the specified range [{lowerBound}, {upperBound}]. Value = {value}).");
+                    }
+                    break;
+
+                case RangeEndPoints.LowerExclusive:
+                    if (value <= lowerBound || value > upperBound)
+                    {
+                        throw new ArgumentOutOfRangeException(
+                            paramName, $"{ExMessage} (The {paramName} is not within the specified range ({lowerBound}, {upperBound}]. Value = {value}).");
+                    }
+                    break;
+
+                case RangeEndPoints.UpperExclusive:
+                    if (value < lowerBound || value >= upperBound)
+                    {
+                        throw new ArgumentOutOfRangeException(
+                            paramName, $"{ExMessage} (The {paramName} is not within the specified range [{lowerBound}, {upperBound}). Value = {value}).");
+                    }
+                    break;
+
+                case RangeEndPoints.Exclusive:
+                    if (value <= lowerBound || value >= upperBound)
+                    {
+                        throw new ArgumentOutOfRangeException(
+                            paramName, $"{ExMessage} (The {paramName} is not within the specified range ({lowerBound}, {upperBound}). Value = {value}).");
+                    }
+                    break;
+            }
         }
 
         /// <summary>
@@ -250,7 +306,6 @@ namespace NautechSystems.Common.Validation
         /// <param name="upperBound">The range upper bound.</param>
         /// <param name="endPoints">The range end points literal.</param>
         /// <exception cref="ArgumentOutOfRangeException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void DoubleNotOutOfRange(
             double value,
@@ -259,9 +314,46 @@ namespace NautechSystems.Common.Validation
             double upperBound,
             RangeEndPoints endPoints = RangeEndPoints.Inclusive)
         {
-#if DEBUG
-            Validate.DoubleNotOutOfRange(value, paramName, lowerBound, upperBound, endPoints);
-#endif
+            if (value.IsInvalidNumber())
+            {
+                throw new ArgumentOutOfRangeException(
+                    paramName, $"{ExMessage} (The {paramName} value is an invalid number).");
+            }
+
+            switch (endPoints)
+            {
+                case RangeEndPoints.Inclusive:
+                    if (value < lowerBound || value > upperBound)
+                    {
+                        throw new ArgumentOutOfRangeException(
+                            paramName, $"{ExMessage} (The {paramName} is not within the specified range [{lowerBound}, {upperBound}]. Value = {value}).");
+                    }
+                    break;
+
+                case RangeEndPoints.LowerExclusive:
+                    if (value <= lowerBound || value > upperBound)
+                    {
+                        throw new ArgumentOutOfRangeException(
+                            paramName, $"{ExMessage} (The {paramName} is not within the specified range ({lowerBound}, {upperBound}]. Value = {value}).");
+                    }
+                    break;
+
+                case RangeEndPoints.UpperExclusive:
+                    if (value < lowerBound || value >= upperBound)
+                    {
+                        throw new ArgumentOutOfRangeException(
+                            paramName, $"{ExMessage} (The {paramName} is not within the specified range [{lowerBound}, {upperBound}). Value = {value}.");
+                    }
+                    break;
+
+                case RangeEndPoints.Exclusive:
+                    if (value <= lowerBound || value >= upperBound)
+                    {
+                        throw new ArgumentOutOfRangeException(
+                            paramName, $"{ExMessage} (The {paramName} is not within the specified range ({lowerBound}, {upperBound}). Value = {value}).");
+                    }
+                    break;
+            }
         }
 
         /// <summary>
@@ -273,7 +365,6 @@ namespace NautechSystems.Common.Validation
         /// <param name="upperBound">The range upper bound.</param>
         /// <param name="endPoints">The range end points literal.</param>
         /// <exception cref="ArgumentOutOfRangeException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void DecimalNotOutOfRange(
             decimal value,
@@ -282,24 +373,68 @@ namespace NautechSystems.Common.Validation
             decimal upperBound,
             RangeEndPoints endPoints = RangeEndPoints.Inclusive)
         {
-#if DEBUG
-            Validate.DecimalNotOutOfRange(value, paramName, lowerBound, upperBound, endPoints);
-#endif
+            switch (endPoints)
+            {
+                case RangeEndPoints.Inclusive:
+                    if (value < lowerBound || value > upperBound)
+                    {
+                        throw new ArgumentOutOfRangeException(
+                            paramName, $"{ExMessage} (The {paramName} is not within the specified range [{lowerBound}, {upperBound}]. Value = {value}).");
+                    }
+                    break;
+
+                case RangeEndPoints.LowerExclusive:
+                    if (value <= lowerBound || value > upperBound)
+                    {
+                        throw new ArgumentOutOfRangeException(
+                            paramName, $"{ExMessage} (The {paramName} is not within the specified range ({lowerBound}, {upperBound}]. Value = {value}).");
+                    }
+                    break;
+
+                case RangeEndPoints.UpperExclusive:
+                    if (value < lowerBound || value >= upperBound)
+                    {
+                        throw new ArgumentOutOfRangeException(
+                            paramName, $"{ExMessage} (The {paramName} is not within the specified range [{lowerBound}, {upperBound}). Value = {value}.");
+                    }
+                    break;
+
+                case RangeEndPoints.Exclusive:
+                    if (value <= lowerBound || value >= upperBound)
+                    {
+                        throw new ArgumentOutOfRangeException(
+                            paramName, $"{ExMessage} (The {paramName} is not within the specified range ({lowerBound}, {upperBound}). Value = {value}).");
+                    }
+                    break;
+            }
         }
 
         /// <summary>
-        /// The validation passes if the value is not an invalid number [or throws].
+        /// The validation passes if the value is not an invalid number.
         /// </summary>
         /// <param name="value">The value to be checked.</param>
         /// <param name="paramName">The parameter name.</param>
         /// <exception cref="ArgumentOutOfRangeException">Throws if validation fails.</exception>
-        [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void DoubleNotInvalidNumber(double value, string paramName)
         {
-#if DEBUG
-            Validate.DoubleNotInvalidNumber(value, paramName);
-#endif
+            if (value.IsInvalidNumber())
+            {
+                throw new ArgumentOutOfRangeException(
+                    paramName, $"{ExMessage} (The {paramName} is an invalid number).");
+            }
+        }
+
+        /// <summary>
+        /// Returns a value indicating whether the given <see cref="double"/> is a valid number.
+        /// </summary>
+        /// <param name="value">The value to be checked.</param>
+        /// <returns>A <see cref="bool"/>.</returns>
+        private static bool IsInvalidNumber(this double value)
+        {
+            return double.IsNaN(value)
+                || double.IsNegativeInfinity(value)
+                || double.IsPositiveInfinity(value);
         }
     }
 }

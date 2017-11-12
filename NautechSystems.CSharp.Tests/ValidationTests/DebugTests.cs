@@ -7,12 +7,12 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-namespace NautechSystems.Common.Tests.ValidationTests
+namespace NautechSystems.CSharp.Tests.ValidationTests
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using NautechSystems.Common.Validation;
+    using NautechSystems.CSharp.Validation;
     using Xunit;
 
     [SuppressMessage("StyleCop.CSharp.NamingRules", "*", Justification = "Reviewed. Suppression is OK within the Test Suite.")]

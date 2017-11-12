@@ -7,10 +7,10 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-namespace NautechSystems.Common.Extensions
+namespace NautechSystems.CSharp.Extensions
 {
     using System;
-    using NautechSystems.Common.Annotations;
+    using NautechSystems.CSharp.Annotations;
 
     /// <summary>
     /// The immutable static <see cref="DecimalExtensions"/> class.

@@ -7,14 +7,14 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-namespace NautechSystems.Common.Extensions
+namespace NautechSystems.CSharp.Extensions
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using NautechSystems.Common.Annotations;
-    using NautechSystems.Common.Validation;
+    using NautechSystems.CSharp.Annotations;
+    using NautechSystems.CSharp.Validation;
 
     /// <summary>
     /// The immutable static <see cref="CollectionExtensions"/> class.

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NautechSystems.Common\NautechSystems.Common.csproj" />
+    <ProjectReference Include="..\NautechSystems.CSharp\NautechSystems.CSharp.csproj" />
   </ItemGroup>
 
 </Project>

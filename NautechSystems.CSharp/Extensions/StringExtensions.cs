@@ -7,12 +7,12 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-namespace NautechSystems.Common.Extensions
+namespace NautechSystems.CSharp.Extensions
 {
     using System;
     using System.Linq;
 
-    using NautechSystems.Common.Annotations;
+    using NautechSystems.CSharp.Annotations;
 
     /// <summary>
     /// The immutable static <see cref="StringExtensions"/> class.

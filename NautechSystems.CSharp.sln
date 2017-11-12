@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NautechSystems.Common", "NautechSystems.Common\NautechSystems.Common.csproj", "{9CF2D175-E711-4CA7-A269-B03C41C3BA25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NautechSystems.CSharp", "NautechSystems.CSharp\NautechSystems.CSharp.csproj", "{9CF2D175-E711-4CA7-A269-B03C41C3BA25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NautechSystems.Common.Tests", "NautechSystems.Common.Tests\NautechSystems.Common.Tests.csproj", "{8739F98E-7F3E-4F57-BC02-FC8768D77172}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NautechSystems.CSharp.Tests", "NautechSystems.CSharp.Tests\NautechSystems.CSharp.Tests.csproj", "{8739F98E-7F3E-4F57-BC02-FC8768D77172}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

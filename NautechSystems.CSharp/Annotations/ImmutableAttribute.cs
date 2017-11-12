@@ -7,7 +7,7 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-namespace NautechSystems.Common.Annotations
+namespace NautechSystems.CSharp.Annotations
 {
     using System;
 

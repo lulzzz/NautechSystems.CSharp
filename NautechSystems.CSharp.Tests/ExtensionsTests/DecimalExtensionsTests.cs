@@ -7,10 +7,10 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-namespace NautechSystems.Common.Tests.ExtensionsTests
+namespace NautechSystems.CSharp.Tests.ExtensionsTests
 {
     using System.Diagnostics.CodeAnalysis;
-    using NautechSystems.Common.Extensions;
+    using NautechSystems.CSharp.Extensions;
     using Xunit;
 
     [SuppressMessage("StyleCop.CSharp.NamingRules", "*", Justification = "Reviewed. Suppression is OK within the Test Suite.")]

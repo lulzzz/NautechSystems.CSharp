@@ -7,7 +7,7 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-namespace NautechSystems.Common.Validation
+namespace NautechSystems.CSharp.Validation
 {
     /// <summary>
     /// The defined literal end points of a range.
