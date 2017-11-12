@@ -4,6 +4,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>NautechSystems.CSharp</AssemblyName>
     <RootNamespace>NautechSystems.CSharp</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Authors>Nautech Systems</Authors>
+    <Company>Nautech Systems Pty Ltd</Company>
+    <Description>A library to support C# development for Nautech Systems.</Description>
+    <PackageLicenseUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/nautechsystems/NautechSystems.CSharp</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/nautechsystems/NautechSystems.CSharp/master/nautechsystems.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/nautechsystems/NautechSystems.CSharp</RepositoryUrl>
+    <PackageTags>validation functional extensions</PackageTags>
+    <Copyright>Copyright ©2017 Nautech Systems Pty Ltd.</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
