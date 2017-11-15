@@ -7,7 +7,7 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-namespace NautechSystems.CSharp
+namespace NautechSystems.CSharp.Extensions
 {
     using System;
     using NautechSystems.CSharp.Annotations;
@@ -166,10 +166,15 @@ namespace NautechSystems.CSharp
         public static Query<T> Ensure<T>(this Query<T> query, Func<T, bool> predicate, string errorMessage)
         {
             if (query.IsFailure)
+            {
                 return Query<T>.Fail(query.Error);
+            }
+
 
             if (!predicate(query.Value))
+            {
                 return Query<T>.Fail(errorMessage);
+            }                
 
             return Query<T>.Ok(query.Value);
         }

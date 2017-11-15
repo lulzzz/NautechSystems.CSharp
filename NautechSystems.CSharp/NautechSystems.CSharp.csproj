@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Annotations\" />
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

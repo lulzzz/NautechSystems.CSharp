@@ -11,7 +11,6 @@ namespace NautechSystems.CSharp.Extensions
 {
     using System;
     using System.Linq;
-
     using NautechSystems.CSharp.Annotations;
 
     /// <summary>
