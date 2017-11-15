@@ -209,6 +209,20 @@ namespace NautechSystems.CSharp.Tests
         }
 
         [Fact]
+        public void Execute_WithNoValue_DoesNothing()
+        {
+            // Arrange
+            string property = string.Empty;
+            var option = Option<TestClass>.None();
+
+            // Act
+            option.Execute(x => property = x.Label);
+
+            // Assert
+            Assert.Equal(string.Empty, property);
+        }
+
+        [Fact]
         public void Unwrap_WithValueType_ReturnsTheCorrectValue()
         {
             // Arrange

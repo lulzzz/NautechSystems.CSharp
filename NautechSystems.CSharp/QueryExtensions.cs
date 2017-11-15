@@ -96,6 +96,70 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="query"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static Query<T> OnSuccess<T>(this Query<T> query, Action<T> action)
+        {
+            if (query.IsSuccess)
+            {
+                action(query.Value);
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static Query<T> OnFailure<T>(this Query<T> query, Action action)
+        {
+            if (query.IsFailure)
+            {
+                action();
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static Query<T> OnFailure<T>(this Query<T> query, Action<string> action)
+        {
+            if (query.IsFailure)
+            {
+                action(query.Error);
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="K"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static K OnBoth<T, K>(this Query<T> query, Func<Query<T>, K> func)
+        {
+            return func(query);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
         /// <param name="predicate"></param>
         /// <param name="errorMessage"></param>
         /// <returns></returns>
@@ -137,70 +201,6 @@ namespace NautechSystems.CSharp
             return command.IsFailure 
                 ? Query<T>.Fail(command.Error) 
                 : Query<T>.Ok(func());
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="query"></param>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public static Query<T> OnSuccess<T>(this Query<T> query, Action<T> action)
-        {
-            if (query.IsSuccess)
-            {
-                action(query.Value);
-            }
-
-            return query;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="K"></typeparam>
-        /// <param name="query"></param>
-        /// <param name="func"></param>
-        /// <returns></returns>
-        public static K OnBoth<T, K>(this Query<T> query, Func<Query<T>, K> func)
-        {
-            return func(query);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="query"></param>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public static Query<T> OnFailure<T>(this Query<T> query, Action action)
-        {
-            if (query.IsFailure)
-            {
-                action();
-            }
-
-            return query;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="query"></param>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public static Query<T> OnFailure<T>(this Query<T> query, Action<string> action)
-        {
-            if (query.IsFailure)
-            {
-                action(query.Error);
-            }
-
-            return query;
         }
     }
 }

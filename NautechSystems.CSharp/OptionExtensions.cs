@@ -7,11 +7,10 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-using NautechSystems.CSharp.Annotations;
-
 namespace NautechSystems.CSharp
 {
     using System;
+    using NautechSystems.CSharp.Annotations;
 
     /// <summary>
     /// The immutable static <see cref="OptionExtensions"/> class.

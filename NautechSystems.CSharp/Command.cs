@@ -23,10 +23,10 @@ namespace NautechSystems.CSharp
         private static readonly Command OkCommand = new Command(false, null);
 
         /// <summary>
-        /// 
+        /// Instantiates a new instance of the <see cref="Command"/> class.
         /// </summary>
-        /// <param name="isFailure"></param>
-        /// <param name="error"></param>
+        /// <param name="isFailure">The is failure boolean.</param>
+        /// <param name="error">The error string.</param>
         private Command(bool isFailure, string error)
             : base(isFailure, error)
         {
@@ -42,9 +42,9 @@ namespace NautechSystems.CSharp
         }
 
         /// <summary>
-        /// 
+        /// Returns a failure command result.
         /// </summary>
-        /// <param name="error"></param>
+        /// <param name="error">The error string.</param>
         /// <returns>A <see cref="Command"/></returns>
         public static Command Fail(string error)
         {
@@ -55,7 +55,7 @@ namespace NautechSystems.CSharp
         /// Returns first failure in the list of <paramref name="commands"/>. 
         /// If there is no failure returns success.
         /// </summary>
-        /// <param name="commands">Array of commands.</param>
+        /// <param name="commands">The commands array.</param>
         public static Command FirstFailureOrSuccess(params Command[] commands)
         {
             Validate.NotNull(commands, nameof(commands));
@@ -75,7 +75,7 @@ namespace NautechSystems.CSharp
         /// Returns failure which combined from all failures in the <paramref name="commands"/> list.
         /// If there is no failure returns success.
         /// </summary>
-        /// <param name="commands">List of commands.</param>
+        /// <param name="commands">The commands array.</param>
         public static Command Combine(params Command[] commands)
         {
             Validate.NotNull(commands, nameof(commands));

@@ -9,7 +9,6 @@
 
 namespace NautechSystems.CSharp.Tests
 {
-    using System;
     using System.Diagnostics.CodeAnalysis;
     using Xunit;
 
@@ -20,7 +19,7 @@ namespace NautechSystems.CSharp.Tests
         private static readonly string _errorMessage = "this failed";
 
         [Fact]
-        public void Should_execute_action_on_generic_failure()
+        public void OnFailure_WithQueryFailed_ExecutesChangeValueAction()
         {
             // Arrange
             var testBool = false;
@@ -34,7 +33,7 @@ namespace NautechSystems.CSharp.Tests
         }
 
         [Fact]
-        public void Should_exexcute_action_with_result_on_generic_failure()
+        public void OnFailure_WithQueryFailed_ExecutesChangeStringAction()
         {
             // Arrange
             var testError = string.Empty;
