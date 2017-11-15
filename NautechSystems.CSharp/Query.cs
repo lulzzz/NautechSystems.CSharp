@@ -25,26 +25,11 @@ namespace NautechSystems.CSharp
         private readonly T value;
 
         /// <summary>
-        /// The result of the query.
+        /// Initializes a new instance of the <see cref="Query{T}"/> class.
         /// </summary>
-        public T Value
-        {
-            [DebuggerStepThrough]
-            get
-            {
-                if (!IsSuccess)
-                    throw new InvalidOperationException("There is no value for failure.");
-
-                return value;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="isFailure"></param>
-        /// <param name="value"></param>
-        /// <param name="error"></param>
+        /// <param name="isFailure">The is failure flag.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="error">The error.</param>
         private Query(bool isFailure, T value, string error) 
             : base(isFailure, error)
         {
@@ -57,10 +42,27 @@ namespace NautechSystems.CSharp
         }
 
         /// <summary>
-        /// 
+        /// Gets the result of the query.
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        public T Value
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                if (!this.IsSuccess)
+                {
+                    throw new InvalidOperationException("There is no value for failure.");
+                }
+
+                return this.value;
+            }
+        }
+
+        /// <summary>
+        /// Returns a success <see cref="Query{T}"/> <see cref="Result"/> with the given value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>A <see cref="Query{T}"/>.</returns>
         public static Query<T> Ok(T value)
         {
             Validate.NotNull(value, nameof(value));
@@ -69,29 +71,30 @@ namespace NautechSystems.CSharp
         }
 
         /// <summary>
-        /// 
+        /// Returns a failure <see cref="Query{T}"/> <see cref="Result"/> with the given error message.
         /// </summary>
-        /// <param name="error"></param>
-        /// <returns></returns>
+        /// <param name="error">The error message.</param>
+        /// <returns>A <see cref="Query{T}"/>.</returns>
         public static Query<T> Fail(string error)
         {
             return new Query<T>(true, default(T), error);
         }
 
-        void ISerializable.GetObjectData(SerializationInfo oInfo, StreamingContext oContext)
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            Validate.NotNull(oInfo, nameof(oInfo));
-            Validate.NotNull(oContext, nameof(oContext));
+            Validate.NotNull(info, nameof(info));
+            Validate.NotNull(context, nameof(context));
 
-            oInfo.AddValue(nameof(IsFailure), IsFailure);
-            oInfo.AddValue(nameof(IsSuccess), IsSuccess);
-            if (IsFailure)
+            info.AddValue(nameof(this.IsFailure), this.IsFailure);
+            info.AddValue(nameof(this.IsSuccess), this.IsSuccess);
+
+            if (this.IsFailure)
             {
-                oInfo.AddValue(nameof(Error), Error);
+                info.AddValue(nameof(this.Error), this.Error);
             }
             else
             {
-                oInfo.AddValue(nameof(Value), Value);
+                info.AddValue(nameof(this.Value), this.Value);
             }
         }
     }

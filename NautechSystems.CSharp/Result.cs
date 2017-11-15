@@ -20,37 +20,10 @@ namespace NautechSystems.CSharp
     [Immutable]
     public abstract class Result
     {
-        /// <summary>
-        /// Returns a result indicating whether the result is a failure.
-        /// </summary>
-        public bool IsFailure { get; }
-
-        /// <summary>
-        /// Returns a result indicating whether the result is a success.
-        /// </summary>
-        public bool IsSuccess => !IsFailure;
-
         private readonly string error;
 
         /// <summary>
-        /// 
-        /// </summary>
-        public string Error
-        {
-            [DebuggerStepThrough]
-            get
-            {
-                if (IsSuccess)
-                {
-                    throw new InvalidOperationException("There is no error message for success.");
-                }
-
-                return error;
-            }
-        }
-
-        /// <summary>
-        /// Instantiates a new instance of the <see cref="Result"/> class.
+        /// Initializes a new instance of the <see cref="Result"/> class.
         /// </summary>
         /// <param name="isFailure">The is failure boolean.</param>
         /// <param name="error">The error string.</param>
@@ -63,7 +36,34 @@ namespace NautechSystems.CSharp
                 this.error = error;
             }
 
-            IsFailure = isFailure;
+            this.IsFailure = isFailure;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the result is a failure.
+        /// </summary>
+        public bool IsFailure { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the result is a success.
+        /// </summary>
+        public bool IsSuccess => !this.IsFailure;
+
+        /// <summary>
+        /// Gets the result error.
+        /// </summary>
+        public string Error
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                if (this.IsSuccess)
+                {
+                    throw new InvalidOperationException("There is no error message for success.");
+                }
+
+                return this.error;
+            }
         }
     }
 }

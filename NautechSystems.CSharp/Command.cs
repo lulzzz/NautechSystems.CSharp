@@ -23,17 +23,21 @@ namespace NautechSystems.CSharp
         private static readonly Command OkCommand = new Command(false, null);
 
         /// <summary>
-        /// Instantiates a new instance of the <see cref="Command"/> class.
+        /// Initializes a new instance of the <see cref="Command"/> class. 
         /// </summary>
-        /// <param name="isFailure">The is failure boolean.</param>
-        /// <param name="error">The error string.</param>
+        /// <param name="isFailure">
+        /// The is failure boolean.
+        /// </param>
+        /// <param name="error">
+        /// The error string.
+        /// </param>
         private Command(bool isFailure, string error)
             : base(isFailure, error)
         {
         }
 
         /// <summary>
-        /// Returns a success command result.
+        /// Returns a success <see cref="Command"/> <see cref="Result"/>.
         /// </summary>
         /// <returns>A <see cref="Command"/></returns>
         public static Command Ok()
@@ -42,7 +46,7 @@ namespace NautechSystems.CSharp
         }
 
         /// <summary>
-        /// Returns a failure command result.
+        /// Returns a failure <see cref="Command"/> <see cref="Result"/>.
         /// </summary>
         /// <param name="error">The error string.</param>
         /// <returns>A <see cref="Command"/></returns>
@@ -56,6 +60,7 @@ namespace NautechSystems.CSharp
         /// If there is no failure returns success.
         /// </summary>
         /// <param name="commands">The commands array.</param>
+        /// <returns>A <see cref="Command"/>.</returns>
         public static Command FirstFailureOrSuccess(params Command[] commands)
         {
             Validate.NotNull(commands, nameof(commands));
@@ -65,7 +70,7 @@ namespace NautechSystems.CSharp
                 if (result.IsFailure)
                 {
                     return Fail(result.Error);
-                }               
+                }
             }
 
             return Ok();
@@ -76,6 +81,7 @@ namespace NautechSystems.CSharp
         /// If there is no failure returns success.
         /// </summary>
         /// <param name="commands">The commands array.</param>
+        /// <returns>A <see cref="Command"/>.</returns>
         public static Command Combine(params Command[] commands)
         {
             Validate.NotNull(commands, nameof(commands));
@@ -92,14 +98,17 @@ namespace NautechSystems.CSharp
             return Fail(errorMessage);
         }
 
-        void ISerializable.GetObjectData(SerializationInfo oInfo, StreamingContext oContext)
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            oInfo.AddValue(nameof(IsFailure), IsFailure);
-            oInfo.AddValue(nameof(IsSuccess), IsSuccess);
+            Validate.NotNull(info, nameof(info));
+            Validate.NotNull(context, nameof(context));
 
-            if (IsFailure)
+            info.AddValue(nameof(this.IsFailure), this.IsFailure);
+            info.AddValue(nameof(this.IsSuccess), this.IsSuccess);
+
+            if (this.IsFailure)
             {
-                oInfo.AddValue(nameof(Error), Error);
+                info.AddValue(nameof(this.Error), this.Error);
             }
         }
     }
