@@ -7,6 +7,8 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
+using NautechSystems.CSharp.Validation;
+
 namespace NautechSystems.CSharp
 {
     using System;
@@ -58,6 +60,8 @@ namespace NautechSystems.CSharp
         /// <returns>An <see cref="Option{T}"/>.</returns>
         public static Option<T> Some(T obj)
         {
+            Validate.NotNull(obj, nameof(obj));
+
             return new Option<T>(obj);
         }
 
@@ -79,6 +83,9 @@ namespace NautechSystems.CSharp
         /// <returns>A <see cref="bool"/></returns>
         public static bool operator ==(Option<T> option, T value)
         {
+            Validate.NotNull(option, nameof(option));
+            Validate.NotNull(value, nameof(value));
+
             return !option.HasNoValue && option.value.Equals(value);
         }
 
@@ -90,6 +97,9 @@ namespace NautechSystems.CSharp
         /// <returns>A <see cref="bool"/></returns>
         public static bool operator !=(Option<T> option, T value)
         {
+            Validate.NotNull(option, nameof(option));
+            Validate.NotNull(value, nameof(value));
+
             return !(option == value);
         }
 
@@ -133,6 +143,7 @@ namespace NautechSystems.CSharp
             }
 
             var other = (Option<T>)obj;
+
             return this.Equals(other);
         }
 
@@ -144,6 +155,8 @@ namespace NautechSystems.CSharp
         /// <returns>A <see cref="bool"/>.</returns>
         public bool Equals(Option<T> other)
         {
+            Validate.NotNull(other, nameof(other));
+
             if (this.HasNoValue && other.HasNoValue)
             {
                 return true;

@@ -9,7 +9,6 @@
 
 namespace NautechSystems.CSharp.Tests.ExtensionsTests
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using NautechSystems.CSharp.Extensions;
