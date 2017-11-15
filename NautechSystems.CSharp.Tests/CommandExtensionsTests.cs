@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------------
-// <copyright file="ResultTests.cs" company="Nautech Systems Pty Ltd.">
+// <copyright file="CommandExtensionsTests.cs" company="Nautech Systems Pty Ltd.">
 //   Copyright (C) 2017. All rights reserved.
 //   https://github.com/nautechsystems/NautechSystems.Common
 //   the use of this source code is governed by the Apache 2.0 license
