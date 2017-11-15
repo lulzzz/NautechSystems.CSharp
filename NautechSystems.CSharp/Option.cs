@@ -7,12 +7,11 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-using NautechSystems.CSharp.Validation;
-
 namespace NautechSystems.CSharp
 {
     using System;
     using NautechSystems.CSharp.Annotations;
+    using NautechSystems.CSharp.Validation;
 
     /// <summary>
     /// The immutable option structure. Wraps a potentially null value.

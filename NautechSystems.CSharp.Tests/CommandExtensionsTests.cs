@@ -14,7 +14,7 @@ namespace NautechSystems.CSharp.Tests
 
     [SuppressMessage("StyleCop.CSharp.NamingRules", "*", Justification = "Reviewed. Suppression is OK within the Test Suite.")]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed. Suppression is OK within the Test Suite.")]
-    public class ResultExtensionsTests
+    public class CommandExtensionsTests
     {
         private static readonly string _errorMessage = "this failed";
 
@@ -25,42 +25,14 @@ namespace NautechSystems.CSharp.Tests
             var testBool = false;
 
             // Act
-            var myResult = Result.Fail(_errorMessage);
+            var myResult = Command.Fail(_errorMessage);
             myResult.OnFailure(() => testBool = true);
 
             // Assert
             Assert.True(testBool);
         }
 
-        [Fact]
-        public void Should_execute_action_on_generic_failure()
-        {
-            // Arrange
-            var testBool = false;
-
-            // Act
-            var myResult = Result.Fail<MyClass>(_errorMessage);
-            myResult.OnFailure(() => testBool = true);
-
-            // Assert
-            Assert.True(testBool);
-        }
-
-        [Fact]
-        public void Should_exexcute_action_with_result_on_generic_failure()
-        {
-            // Arrange
-            var testError = string.Empty;
-
-            // Act
-            var myResult = Result.Fail<MyClass>(_errorMessage);
-            myResult.OnFailure(error => testError = error);
-
-            // Assert
-            Assert.Equal(_errorMessage, testError);
-        }
-
-        private class MyClass
+        private class TestClass
         {
             public string Property { get; set; }
         }

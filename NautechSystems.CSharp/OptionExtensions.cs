@@ -26,11 +26,11 @@ namespace NautechSystems.CSharp
         /// <param name="option"></param>
         /// <param name="errorMessage"></param>
         /// <returns></returns>
-        public static Result<T> ToResult<T>(this Option<T> option, string errorMessage)
+        public static Query<T> ToResult<T>(this Option<T> option, string errorMessage)
         {
             return option.HasNoValue 
-                ? Result.Fail<T>(errorMessage) 
-                : Result.Ok(option.Value);
+                ? Query<T>.Fail(errorMessage) 
+                : Query<T>.Ok(option.Value);
         }
 
         /// <summary>
