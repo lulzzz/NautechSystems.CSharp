@@ -1,7 +1,7 @@
 ﻿// -------------------------------------------------------------------------------------------------
 // <copyright file="CollectionExtensionsTests.cs" company="Nautech Systems Pty Ltd.">
 //   Copyright (C) 2017. All rights reserved.
-//   https://github.com/nautechsystems/NautechSystems.Common
+//   https://github.com/nautechsystems/NautechSystems.CSharp
 //   the use of this source code is governed by the Apache 2.0 license
 //   as found in the LICENSE.txt file.
 // </copyright>
@@ -11,6 +11,7 @@ namespace NautechSystems.CSharp.Tests.ExtensionsTests
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using NautechSystems.CSharp.Extensions;
     using Xunit;
 
@@ -90,12 +91,18 @@ namespace NautechSystems.CSharp.Tests.ExtensionsTests
         internal void ForEach_WhenCollectionEmpty()
         {
             // Arrange
-            var collection = new List<string>();
+            var collection = new List<string> { "action1", "action2" }.AsEnumerable();
 
             // Act
-
+            collection.ForEach(this.TestAction);
 
             // Assert
+
+        }
+
+        private void TestAction(string input)
+        {
+            // TODO:
         }
     }
 }

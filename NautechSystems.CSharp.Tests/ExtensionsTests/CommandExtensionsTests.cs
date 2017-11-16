@@ -1,7 +1,7 @@
 ﻿// -------------------------------------------------------------------------------------------------
 // <copyright file="CommandExtensionsTests.cs" company="Nautech Systems Pty Ltd.">
 //   Copyright (C) 2017. All rights reserved.
-//   https://github.com/nautechsystems/NautechSystems.Common
+//   https://github.com/nautechsystems/NautechSystems.CSharp
 //   the use of this source code is governed by the Apache 2.0 license
 //   as found in the LICENSE.txt file.
 // </copyright>
@@ -20,14 +20,29 @@ namespace NautechSystems.CSharp.Tests.ExtensionsTests
         private static readonly string _errorMessage = "this failed";
 
         [Fact]
-        public void Should_execute_action_on_failure()
+        public void OnSuccess_WithAnonymousFunction_PerformsFunction()
         {
             // Arrange
             var testBool = false;
 
             // Act
-            var myResult = Command.Fail(_errorMessage);
-            myResult.OnFailure(() => testBool = true);
+            var command = Command.Ok();
+            command.OnSuccess(() => testBool = true);
+
+            // Assert
+            Assert.True(testBool);
+        }
+
+
+        [Fact]
+        public void OnFailure_WithFailure_InvokesAction()
+        {
+            // Arrange
+            var testBool = false;
+
+            // Act
+            var command = Command.Fail(_errorMessage);
+            command.OnFailure(() => testBool = true);
 
             // Assert
             Assert.True(testBool);

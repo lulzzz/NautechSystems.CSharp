@@ -1,7 +1,7 @@
 ﻿// -------------------------------------------------------------------------------------------------
 // <copyright file="Command.cs" company="Nautech Systems Pty Ltd.">
 //   Copyright (C) 2017. All rights reserved.
-//   https://github.com/nautechsystems/NautechSystems.Common
+//   https://github.com/nautechsystems/NautechSystems.CSharp
 //   the use of this source code is governed by the Apache 2.0 license
 //   as found in the LICENSE.txt file.
 // </copyright>
@@ -9,8 +9,8 @@
 
 namespace NautechSystems.CSharp
 {
+    using System;
     using System.Linq;
-    using System.Runtime.Serialization;
     using NautechSystems.CSharp.Annotations;
     using NautechSystems.CSharp.Validation;
 
@@ -18,7 +18,7 @@ namespace NautechSystems.CSharp
     /// The immutable sealed <see cref="Command"/> <see cref="Result"/> class.
     /// </summary>
     [Immutable]
-    public sealed class Command : Result, ISerializable
+    public sealed class Command : Result
     {
         private static readonly Command OkCommand = new Command(false, null);
 
@@ -31,7 +31,7 @@ namespace NautechSystems.CSharp
         /// <param name="error">
         /// The error string.
         /// </param>
-        private Command(bool isFailure, string error)
+        private Command(bool isFailure, [CanBeNull] string error)
             : base(isFailure, error)
         {
         }
@@ -50,8 +50,11 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="error">The error string.</param>
         /// <returns>A <see cref="Command"/></returns>
+        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public static Command Fail(string error)
         {
+            Validate.NotNull(error, nameof(error));
+
             return new Command(true, error);
         }
 
@@ -61,6 +64,7 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="commands">The commands array.</param>
         /// <returns>A <see cref="Command"/>.</returns>
+        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public static Command FirstFailureOrSuccess(params Command[] commands)
         {
             Validate.NotNull(commands, nameof(commands));
@@ -82,6 +86,7 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="commands">The commands array.</param>
         /// <returns>A <see cref="Command"/>.</returns>
+        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public static Command Combine(params Command[] commands)
         {
             Validate.NotNull(commands, nameof(commands));
@@ -96,20 +101,6 @@ namespace NautechSystems.CSharp
             var errorMessage = string.Join("; ", failedResults.Select(x => x.Error).ToArray());
 
             return Fail(errorMessage);
-        }
-
-        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            Validate.NotNull(info, nameof(info));
-            Validate.NotNull(context, nameof(context));
-
-            info.AddValue(nameof(this.IsFailure), this.IsFailure);
-            info.AddValue(nameof(this.IsSuccess), this.IsSuccess);
-
-            if (this.IsFailure)
-            {
-                info.AddValue(nameof(this.Error), this.Error);
-            }
         }
     }
 }

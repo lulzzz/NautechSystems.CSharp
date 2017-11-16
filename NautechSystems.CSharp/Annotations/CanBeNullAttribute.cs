@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------------
-// <copyright file="ImmutableAttribute.cs" company="Nautech Systems Pty Ltd.">
+// <copyright file="CanBeNullAttribute.cs" company="Nautech Systems Pty Ltd.">
 //   Copyright (C) 2017. All rights reserved.
 //   https://github.com/nautechsystems/NautechSystems.CSharp
 //   the use of this source code is governed by the Apache 2.0 license
@@ -12,12 +12,11 @@ namespace NautechSystems.CSharp.Annotations
     using System;
 
     /// <summary>
-    /// This decoration indicates that the annotated class or structure should be completely immutable
-    /// (to fulfill its design specification). Once instantiated the public properties of the object 
-    /// should not change.
+    /// This decoration indicates that null is a possible and expected value of the annotated parameter
+    /// (therefor an explicit check for null is not required).
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
-    public sealed class ImmutableAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public class CanBeNullAttribute : Attribute
     {
     }
 }

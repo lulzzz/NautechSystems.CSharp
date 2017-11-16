@@ -1,7 +1,7 @@
 ﻿// -------------------------------------------------------------------------------------------------
 // <copyright file="CollectionExtensions.cs" company="Nautech Systems Pty Ltd.">
 //   Copyright (C) 2017. All rights reserved.
-//   https://github.com/nautechsystems/NautechSystems.Common
+//   https://github.com/nautechsystems/NautechSystems.CSharp
 //   the use of this source code is governed by the Apache 2.0 license
 //   as found in the LICENSE.txt file.
 // </copyright>
@@ -84,8 +84,7 @@ namespace NautechSystems.CSharp.Extensions
         /// <param name="source">The source.</param>
         /// <param name="action">The action.</param>
         /// <typeparam name="T">The type.</typeparam>
-        /// <exception cref="ArgumentNullException">Throws if source collection null.</exception>
-        /// <exception cref="ArgumentNullException">Throws if action null.</exception>
+        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             Validate.NotNull(source, nameof(source));

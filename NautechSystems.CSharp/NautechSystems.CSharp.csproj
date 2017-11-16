@@ -25,8 +25,4 @@
     <WarningsAsErrors />
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Annotations\" />
-  </ItemGroup>
-
 </Project>

@@ -1,7 +1,7 @@
 ﻿// -------------------------------------------------------------------------------------------------
 // <copyright file="CommandTests.cs" company="Nautech Systems Pty Ltd.">
 //   Copyright (C) 2017. All rights reserved.
-//   https://github.com/nautechsystems/NautechSystems.Common
+//   https://github.com/nautechsystems/NautechSystems.CSharp
 //   the use of this source code is governed by the Apache 2.0 license
 //   as found in the LICENSE.txt file.
 // </copyright>
@@ -50,7 +50,7 @@ namespace NautechSystems.CSharp.Tests
         {
             // Arrange
             // Act           
-            Command command = Command.Fail("Error message");
+            var command = Command.Fail("Error message");
 
             // Assert
             Assert.Equal("Error message", command.Error);
@@ -59,7 +59,7 @@ namespace NautechSystems.CSharp.Tests
         }
 
         [Fact]
-        public void Fail_AllTypesWithNoErrorMessage_Throws()
+        public void Fail_WithNoErrorMessage_Throws()
         {
             // Arrange
             Action action1 = () => { Command.Fail(null); };

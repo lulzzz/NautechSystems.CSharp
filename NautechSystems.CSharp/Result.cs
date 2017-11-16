@@ -1,7 +1,7 @@
 ﻿// -------------------------------------------------------------------------------------------------
 // <copyright file="Result.cs" company="Nautech Systems Pty Ltd.">
 //   Copyright (C) 2017. All rights reserved.
-//   https://github.com/nautechsystems/NautechSystems.Common
+//   https://github.com/nautechsystems/NautechSystems.CSharp
 //   the use of this source code is governed by the Apache 2.0 license
 //   as found in the LICENSE.txt file.
 // </copyright>
@@ -27,7 +27,7 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="isFailure">The is failure boolean.</param>
         /// <param name="error">The error string.</param>
-        protected Result(bool isFailure, string error)
+        protected Result(bool isFailure, [CanBeNull] string error)
         {
             if (isFailure)
             {

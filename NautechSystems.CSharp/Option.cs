@@ -1,7 +1,7 @@
 ﻿// -------------------------------------------------------------------------------------------------
 // <copyright file="Option.cs" company="Nautech Systems Pty Ltd.">
 //   Copyright (C) 2017. All rights reserved.
-//   https://github.com/nautechsystems/NautechSystems.Common
+//   https://github.com/nautechsystems/NautechSystems.CSharp
 //   the use of this source code is governed by the Apache 2.0 license
 //   as found in the LICENSE.txt file.
 // </copyright>
@@ -26,7 +26,7 @@ namespace NautechSystems.CSharp
         /// Initializes a new instance of the <see cref="Option{T}"/> struct.
         /// </summary>
         /// <param name="value">The value.</param>
-        private Option(T value)
+        private Option([CanBeNull] T value)
         {
             this.value = value;
         }
@@ -34,6 +34,7 @@ namespace NautechSystems.CSharp
         /// <summary>
         /// Gets the value of the <see cref="Option{T}"/>.
         /// </summary>
+        /// <exception cref="ArgumentNullException">Throws if the value is null.</exception>
         public T Value => this.GetValue();
 
         /// <summary>
@@ -57,6 +58,7 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns>An <see cref="Option{T}"/>.</returns>
+        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public static Option<T> Some(T obj)
         {
             Validate.NotNull(obj, nameof(obj));
@@ -69,7 +71,7 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>An <see cref="Option{T}"/>.</returns>
-        public static implicit operator Option<T>(T value)
+        public static implicit operator Option<T>([CanBeNull] T value)
         {
             return new Option<T>(value);
         }
@@ -80,6 +82,7 @@ namespace NautechSystems.CSharp
         /// <param name="option">The <see cref="Option{T}"/>.</param>
         /// <param name="value">The value.</param>
         /// <returns>A <see cref="bool"/></returns>
+        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
         public static bool operator ==(Option<T> option, T value)
         {
             Validate.NotNull(option, nameof(option));
@@ -94,6 +97,7 @@ namespace NautechSystems.CSharp
         /// <param name="option">The <see cref="Option{T}"/>.</param>
         /// <param name="value">The value.</param>
         /// <returns>A <see cref="bool"/></returns>
+        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
         public static bool operator !=(Option<T> option, T value)
         {
             Validate.NotNull(option, nameof(option));
@@ -108,8 +112,12 @@ namespace NautechSystems.CSharp
         /// <param name="left">The left <see cref="Option{T}"/>.</param>
         /// <param name="right">The right <see cref="Option{T}"/>.</param>
         /// <returns>A <see cref="bool"/></returns>
+        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
         public static bool operator ==(Option<T> left, Option<T> right)
         {
+            Validate.NotNull(left, nameof(left));
+            Validate.NotNull(right, nameof(right));
+
             return left.Equals(right);
         }
 
@@ -119,8 +127,12 @@ namespace NautechSystems.CSharp
         /// <param name="left">The left <see cref="Option{T}"/>.</param>
         /// <param name="right">The right <see cref="Option{T}"/>.</param>
         /// <returns>A <see cref="bool"/></returns>
+        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
         public static bool operator !=(Option<T> left, Option<T> right)
         {
+            Validate.NotNull(left, nameof(left));
+            Validate.NotNull(right, nameof(right));
+
             return !(left == right);
         }
 
@@ -129,7 +141,7 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="obj">The other object.</param>
         /// <returns>A <see cref="bool"/>.</returns>
-        public override bool Equals(object obj)
+        public override bool Equals([CanBeNull] object obj)
         {
             if (obj is T)
             {
@@ -152,6 +164,7 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="other">The other object.</param>
         /// <returns>A <see cref="bool"/>.</returns>
+        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public bool Equals(Option<T> other)
         {
             Validate.NotNull(other, nameof(other));
@@ -199,12 +212,9 @@ namespace NautechSystems.CSharp
 
         private T GetValue()
         {
-            if (this.HasValue)
-            {
-                return this.value;
-            }
+            Validate.NotNull(this.value, nameof(this.value));
 
-            throw new InvalidOperationException("Cannot get value (there is no value).");
+            return this.value;
         }
     }
 }
