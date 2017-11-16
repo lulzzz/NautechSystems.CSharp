@@ -30,7 +30,10 @@ namespace NautechSystems.CSharp
         /// <param name="isFailure">The is failure flag.</param>
         /// <param name="value">The value.</param>
         /// <param name="error">The error.</param>
-        private Query(bool isFailure, T value, string error) 
+        private Query(
+            bool isFailure, 
+            [CanBeNull] T value, 
+            [CanBeNull] string error) 
             : base(isFailure, error)
         {
             if (!isFailure)
@@ -63,6 +66,7 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>A <see cref="Query{T}"/>.</returns>
+        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public static Query<T> Ok(T value)
         {
             Validate.NotNull(value, nameof(value));
@@ -75,8 +79,11 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="error">The error message.</param>
         /// <returns>A <see cref="Query{T}"/>.</returns>
+        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public static Query<T> Fail(string error)
         {
+            Validate.NotNull(error, nameof(error));
+
             return new Query<T>(true, default(T), error);
         }
 

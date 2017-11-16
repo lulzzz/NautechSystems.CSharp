@@ -76,7 +76,7 @@ namespace NautechSystems.CSharp.Tests
             Option<TestClass> option = null;
 
             // Act
-            Assert.Throws<InvalidOperationException>(() => option.Value);
+            Assert.Throws<ArgumentNullException>(() => option.Value);
         }
 
         [Fact]

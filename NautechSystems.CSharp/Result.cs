@@ -27,7 +27,7 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="isFailure">The is failure boolean.</param>
         /// <param name="error">The error string.</param>
-        protected Result(bool isFailure, string error)
+        protected Result(bool isFailure, [CanBeNull] string error)
         {
             if (isFailure)
             {

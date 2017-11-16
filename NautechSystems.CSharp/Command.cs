@@ -9,6 +9,7 @@
 
 namespace NautechSystems.CSharp
 {
+    using System;
     using System.Linq;
     using System.Runtime.Serialization;
     using NautechSystems.CSharp.Annotations;
@@ -31,7 +32,7 @@ namespace NautechSystems.CSharp
         /// <param name="error">
         /// The error string.
         /// </param>
-        private Command(bool isFailure, string error)
+        private Command(bool isFailure, [CanBeNull] string error)
             : base(isFailure, error)
         {
         }
@@ -50,8 +51,11 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="error">The error string.</param>
         /// <returns>A <see cref="Command"/></returns>
+        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public static Command Fail(string error)
         {
+            Validate.NotNull(error, nameof(error));
+
             return new Command(true, error);
         }
 
@@ -61,6 +65,7 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="commands">The commands array.</param>
         /// <returns>A <see cref="Command"/>.</returns>
+        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public static Command FirstFailureOrSuccess(params Command[] commands)
         {
             Validate.NotNull(commands, nameof(commands));
@@ -82,6 +87,7 @@ namespace NautechSystems.CSharp
         /// </summary>
         /// <param name="commands">The commands array.</param>
         /// <returns>A <see cref="Command"/>.</returns>
+        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public static Command Combine(params Command[] commands)
         {
             Validate.NotNull(commands, nameof(commands));
