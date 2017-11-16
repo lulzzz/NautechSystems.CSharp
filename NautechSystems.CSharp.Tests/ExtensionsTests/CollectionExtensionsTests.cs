@@ -9,8 +9,10 @@
 
 namespace NautechSystems.CSharp.Tests.ExtensionsTests
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using NautechSystems.CSharp.Extensions;
     using Xunit;
 
@@ -90,12 +92,18 @@ namespace NautechSystems.CSharp.Tests.ExtensionsTests
         internal void ForEach_WhenCollectionEmpty()
         {
             // Arrange
-            var collection = new List<string>();
+            var collection = new List<string> { "action1", "action2" }.AsEnumerable();
 
             // Act
-
+            collection.ForEach(this.TestAction);
 
             // Assert
+
+        }
+
+        private void TestAction(string input)
+        {
+            // TODO:
         }
     }
 }

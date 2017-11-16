@@ -11,7 +11,6 @@ namespace NautechSystems.CSharp
 {
     using System;
     using System.Diagnostics;
-    using System.Runtime.Serialization;
     using NautechSystems.CSharp.Annotations;
     using NautechSystems.CSharp.Validation;
 
@@ -20,7 +19,7 @@ namespace NautechSystems.CSharp
     /// </summary>
     /// <typeparam name="T">The query type.</typeparam>
     [Immutable]
-    public sealed class Query<T> : Result, ISerializable
+    public sealed class Query<T> : Result
     {
         private readonly T value;
 
@@ -85,24 +84,6 @@ namespace NautechSystems.CSharp
             Validate.NotNull(error, nameof(error));
 
             return new Query<T>(true, default(T), error);
-        }
-
-        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            Validate.NotNull(info, nameof(info));
-            Validate.NotNull(context, nameof(context));
-
-            info.AddValue(nameof(this.IsFailure), this.IsFailure);
-            info.AddValue(nameof(this.IsSuccess), this.IsSuccess);
-
-            if (this.IsFailure)
-            {
-                info.AddValue(nameof(this.Error), this.Error);
-            }
-            else
-            {
-                info.AddValue(nameof(this.Value), this.Value);
-            }
         }
     }
 }

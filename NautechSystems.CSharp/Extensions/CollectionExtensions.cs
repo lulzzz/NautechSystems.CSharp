@@ -84,8 +84,7 @@ namespace NautechSystems.CSharp.Extensions
         /// <param name="source">The source.</param>
         /// <param name="action">The action.</param>
         /// <typeparam name="T">The type.</typeparam>
-        /// <exception cref="ArgumentNullException">Throws if source collection null.</exception>
-        /// <exception cref="ArgumentNullException">Throws if action null.</exception>
+        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             Validate.NotNull(source, nameof(source));

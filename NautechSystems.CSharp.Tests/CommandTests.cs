@@ -50,7 +50,7 @@ namespace NautechSystems.CSharp.Tests
         {
             // Arrange
             // Act           
-            Command command = Command.Fail("Error message");
+            var command = Command.Fail("Error message");
 
             // Assert
             Assert.Equal("Error message", command.Error);
@@ -59,7 +59,7 @@ namespace NautechSystems.CSharp.Tests
         }
 
         [Fact]
-        public void Fail_AllTypesWithNoErrorMessage_Throws()
+        public void Fail_WithNoErrorMessage_Throws()
         {
             // Arrange
             Action action1 = () => { Command.Fail(null); };
