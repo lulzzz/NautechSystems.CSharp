@@ -17,7 +17,7 @@ namespace NautechSystems.CSharp.Tests.ExtensionsTests
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed. Suppression is OK within the Test Suite.")]
     public class QueryExtensionsTests
     {
-        private static readonly string _errorMessage = "this failed";
+        private const string errorMessage = "this failed";
 
         [Fact]
         public void OnFailure_WithQueryFailed_ExecutesChangeValueAction()
@@ -26,7 +26,7 @@ namespace NautechSystems.CSharp.Tests.ExtensionsTests
             var testBool = false;
 
             // Act
-            var myResult = Query<TestClass>.Fail(_errorMessage);
+            var myResult = Query<TestClass>.Fail(errorMessage);
             myResult.OnFailure(() => testBool = true);
 
             // Assert
@@ -40,11 +40,11 @@ namespace NautechSystems.CSharp.Tests.ExtensionsTests
             var testError = string.Empty;
 
             // Act
-            var myResult = Query<TestClass>.Fail(_errorMessage);
-            myResult.OnFailure(error => testError = error);
+            var result = Query<TestClass>.Fail(errorMessage);
+            result.OnFailure(error => testError = error);
 
             // Assert
-            Assert.Equal(_errorMessage, testError);
+            Assert.Equal($"Query Failure ({errorMessage}).", testError);
         }
 
         private class TestClass

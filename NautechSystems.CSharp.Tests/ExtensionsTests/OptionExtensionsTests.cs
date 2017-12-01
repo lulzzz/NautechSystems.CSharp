@@ -96,7 +96,7 @@ namespace NautechSystems.CSharp.Tests.ExtensionsTests
 
             // Assert
             Assert.False(result.IsSuccess);
-            Assert.Equal("Error", result.Error);
+            Assert.Equal("Query Failure (Error).", result.Error);
         }
 
         [Fact]

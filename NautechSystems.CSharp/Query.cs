@@ -54,12 +54,9 @@ namespace NautechSystems.CSharp
             [DebuggerStepThrough]
             get
             {
-                if (!this.IsSuccess)
-                {
-                    throw new InvalidOperationException("There is no value for failure.");
-                }
-
-                return this.value;
+                return this.IsSuccess 
+                    ? this.value
+                    : throw new InvalidOperationException("There is no value for failure.");
             }
         }
 
@@ -86,7 +83,7 @@ namespace NautechSystems.CSharp
         {
             Validate.NotNull(error, nameof(error));
 
-            return new Query<T>(true, default(T), error);
+            return new Query<T>(true, default(T), $"Query Failure ({error}).");
         }
     }
 }

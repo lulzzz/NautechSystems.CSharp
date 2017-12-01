@@ -10,6 +10,7 @@
 namespace NautechSystems.CSharp
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using NautechSystems.CSharp.Annotations;
     using NautechSystems.CSharp.Validation;
@@ -52,7 +53,7 @@ namespace NautechSystems.CSharp
         {
             Validate.NotNull(error, nameof(error));
 
-            return new Command(true, error);
+            return new Command(true, $"Command Failure ({error}).");
         }
 
         /// <summary>
@@ -66,20 +67,12 @@ namespace NautechSystems.CSharp
         {
             Validate.NotNull(commands, nameof(commands));
 
-            foreach (var result in commands)
-            {
-                if (result.IsFailure)
-                {
-                    return Fail(result.Error);
-                }
-            }
-
-            return Ok();
+            return commands.FirstOrDefault(c => c.IsFailure) ?? Ok();
         }
 
         /// <summary>
-        /// Returns failure which combined from all failures in the <paramref name="commands"/> list.
-        /// If there is no failure returns success.
+        /// Returns combined result from all failures in the <paramref name="commands"/> list.
+        /// If there is no failure then returns success.
         /// </summary>
         /// <param name="commands">The commands array.</param>
         /// <returns>A <see cref="Command"/> result.</returns>
@@ -93,14 +86,14 @@ namespace NautechSystems.CSharp
                 .Where(x => x.IsFailure)
                 .ToList();
 
-            if (!failedResults.Any())
-            {
-                return Ok();
-            }              
+            return failedResults.Any() 
+                ? Fail(CombineErrorMessages(failedResults)) 
+                : Ok();
+        }
 
-            var errorMessage = string.Join("; ", failedResults.Select(x => x.Error).ToArray());
-
-            return Fail(errorMessage);
+        private static string CombineErrorMessages(IList<Command> failedResults)
+        {
+            return string.Join("; ", failedResults.Select(x => x.Error.Split('(', ')')[1]));
         }
     }
 }

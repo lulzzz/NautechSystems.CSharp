@@ -67,7 +67,7 @@ namespace NautechSystems.CSharp.Tests
             var result = Query<TestClass>.Fail("Error message");
 
             // Assert
-            Assert.Equal("Error message", result.Error);
+            Assert.Equal("Query Failure (Error message).", result.Error);
             Assert.True(result.IsFailure);
             Assert.False(result.IsSuccess);
         }

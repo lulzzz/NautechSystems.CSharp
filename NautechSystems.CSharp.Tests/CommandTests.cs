@@ -50,10 +50,10 @@ namespace NautechSystems.CSharp.Tests
         {
             // Arrange
             // Act           
-            var command = Command.Fail("Error message");
+            var command = Command.Fail("error message");
 
             // Assert
-            Assert.Equal("Error message", command.Error);
+            Assert.Equal("Command Failure (error message).", command.Error);
             Assert.True(command.IsFailure);
             Assert.False(command.IsSuccess);
         }
@@ -84,7 +84,7 @@ namespace NautechSystems.CSharp.Tests
 
             // Assert
             Assert.True(result.IsFailure);
-            Assert.Equal("Failure 1", result.Error);
+            Assert.Equal("Command Failure (Failure 1).", result.Error);
         }
 
         [Fact]
@@ -107,15 +107,15 @@ namespace NautechSystems.CSharp.Tests
         {
             // Arrange
             var result1 = Command.Ok();
-            var result2 = Command.Fail("Failure 1");
-            var result3 = Command.Fail("Failure 2");
+            var result2 = Command.Fail("error 1");
+            var result3 = Command.Fail("error 2");
 
             // Act
             var result = Command.Combine(result1, result2, result3);
 
             // Assert
             Assert.True(result.IsFailure);
-            Assert.Equal("Failure 1; Failure 2", result.Error);
+            Assert.Equal("Command Failure (error 1; error 2).", result.Error);
         }
 
         [Fact]
