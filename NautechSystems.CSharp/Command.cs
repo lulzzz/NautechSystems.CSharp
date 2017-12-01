@@ -15,7 +15,8 @@ namespace NautechSystems.CSharp
     using NautechSystems.CSharp.Validation;
 
     /// <summary>
-    /// The immutable sealed <see cref="Command"/> <see cref="Result"/> class.
+    /// The immutable sealed <see cref="Command"/> <see cref="Result"/> class. A type which wraps the
+    /// result of a command.
     /// </summary>
     [Immutable]
     public sealed class Command : Result
@@ -25,12 +26,8 @@ namespace NautechSystems.CSharp
         /// <summary>
         /// Initializes a new instance of the <see cref="Command"/> class. 
         /// </summary>
-        /// <param name="isFailure">
-        /// The is failure boolean.
-        /// </param>
-        /// <param name="error">
-        /// The error string.
-        /// </param>
+        /// <param name="isFailure">The command is failure boolean flag.</param>
+        /// <param name="error">The command error string (can be null).</param>
         private Command(bool isFailure, [CanBeNull] string error)
             : base(isFailure, error)
         {
@@ -39,7 +36,7 @@ namespace NautechSystems.CSharp
         /// <summary>
         /// Returns a success <see cref="Command"/> <see cref="Result"/>.
         /// </summary>
-        /// <returns>A <see cref="Command"/></returns>
+        /// <returns>A <see cref="Command"/> result</returns>
         public static Command Ok()
         {
             return OkCommand;
@@ -48,8 +45,8 @@ namespace NautechSystems.CSharp
         /// <summary>
         /// Returns a failure <see cref="Command"/> <see cref="Result"/>.
         /// </summary>
-        /// <param name="error">The error string.</param>
-        /// <returns>A <see cref="Command"/></returns>
+        /// <param name="error">The command error string.</param>
+        /// <returns>A <see cref="Command"/> result</returns>
         /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public static Command Fail(string error)
         {
@@ -59,8 +56,8 @@ namespace NautechSystems.CSharp
         }
 
         /// <summary>
-        /// Returns first failure in the list of <paramref name="commands"/>. 
-        /// If there is no failure returns success.
+        /// Returns first failure in the list of <paramref name="commands"/> 
+        /// (if there is no failure returns success.)
         /// </summary>
         /// <param name="commands">The commands array.</param>
         /// <returns>A <see cref="Command"/>.</returns>
@@ -85,13 +82,16 @@ namespace NautechSystems.CSharp
         /// If there is no failure returns success.
         /// </summary>
         /// <param name="commands">The commands array.</param>
-        /// <returns>A <see cref="Command"/>.</returns>
+        /// <returns>A <see cref="Command"/> result.</returns>
         /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
+        /// <exception cref="ArgumentException">Throws if the commands array is empty.</exception>
         public static Command Combine(params Command[] commands)
         {
-            Validate.NotNull(commands, nameof(commands));
+            Validate.CollectionNotNullOrEmpty(commands, nameof(commands));
 
-            var failedResults = commands.Where(x => x.IsFailure).ToList();
+            var failedResults = commands
+                .Where(x => x.IsFailure)
+                .ToList();
 
             if (!failedResults.Any())
             {

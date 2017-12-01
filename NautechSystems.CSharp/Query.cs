@@ -15,7 +15,8 @@ namespace NautechSystems.CSharp
     using NautechSystems.CSharp.Validation;
 
     /// <summary>
-    /// The immutable sealed <see cref="Query{T}"/> <see cref="Result"/> class.
+    /// The immutable sealed <see cref="Query{T}"/> <see cref="Result"/> class. A type which wraps
+    /// the result of a query.
     /// </summary>
     /// <typeparam name="T">The query type.</typeparam>
     [Immutable]
@@ -27,8 +28,8 @@ namespace NautechSystems.CSharp
         /// Initializes a new instance of the <see cref="Query{T}"/> class.
         /// </summary>
         /// <param name="isFailure">The is failure flag.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="error">The error.</param>
+        /// <param name="value">The query value.</param>
+        /// <param name="error">The query error.</param>
         private Query(
             bool isFailure, 
             [CanBeNull] T value, 
@@ -44,8 +45,10 @@ namespace NautechSystems.CSharp
         }
 
         /// <summary>
-        /// Gets the result of the query.
-        /// </summary>
+        /// Gets the value (throws if null).
+        /// </summary>        
+        /// <returns>The query value.</returns>
+        /// <exception cref="InvalidOperationException">Throws if the value is null.</exception>
         public T Value
         {
             [DebuggerStepThrough]
@@ -63,8 +66,8 @@ namespace NautechSystems.CSharp
         /// <summary>
         /// Returns a success <see cref="Query{T}"/> <see cref="Result"/> with the given value.
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>A <see cref="Query{T}"/>.</returns>
+        /// <param name="value">The query value.</param>
+        /// <returns>A <see cref="Query{T}"/> result.</returns>
         /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public static Query<T> Ok(T value)
         {
@@ -76,8 +79,8 @@ namespace NautechSystems.CSharp
         /// <summary>
         /// Returns a failure <see cref="Query{T}"/> <see cref="Result"/> with the given error message.
         /// </summary>
-        /// <param name="error">The error message.</param>
-        /// <returns>A <see cref="Query{T}"/>.</returns>
+        /// <param name="error">The query error message.</param>
+        /// <returns>A <see cref="Query{T}"/> result.</returns>
         /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
         public static Query<T> Fail(string error)
         {

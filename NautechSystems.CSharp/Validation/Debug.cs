@@ -83,6 +83,22 @@ namespace NautechSystems.CSharp.Validation
         }
 
         /// <summary>
+        /// The validation passes if the struct argument is not the default value.
+        /// </summary>
+        /// <typeparam name="T">The argument type.</typeparam>
+        /// <param name="argument">The string argument.</param>
+        /// <param name="paramName">The parameter name.</param>
+        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        [Conditional("DEBUG")]
+        [DebuggerStepThrough]
+        public static void NotDefault<T>(T argument, string paramName) where T : struct
+        {
+#if DEBUG
+            Validate.NotDefault(argument, paramName);
+#endif
+        }
+
+        /// <summary>
         /// The validation passes if the <see cref="ICollection{T}"/> is not null, or empty.
         /// </summary>
         /// <param name="collection">The collection.</param>

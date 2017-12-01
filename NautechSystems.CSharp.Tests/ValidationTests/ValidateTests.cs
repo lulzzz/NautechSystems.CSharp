@@ -12,6 +12,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Drawing;
     using NautechSystems.CSharp.Validation;
     using Xunit;
 
@@ -98,6 +99,28 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Act
             // Assert
             Validate.NotNull(obj, nameof(obj));
+        }
+
+        [Fact]
+        internal void NotDefault_WithNotDefaultStruct_DoesNothing()
+        {
+            // Arrange
+            var obj = new Point(1, 1);
+
+            // Act
+            // Assert
+            Validate.NotDefault(obj, nameof(obj));
+        }
+
+        [Fact]
+        internal void NotDefault_WithDefaultStruct_Throws()
+        {
+            // Arrange
+            var point = new Point();
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>(() => Validate.NotDefault(point, nameof(point)));
         }
 
         [Fact]

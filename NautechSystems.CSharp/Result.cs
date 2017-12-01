@@ -15,7 +15,7 @@ namespace NautechSystems.CSharp
     using NautechSystems.CSharp.Validation;
 
     /// <summary>
-    /// The immutable abstract <see cref="Result"/> class.
+    /// The immutable abstract <see cref="Result"/> class. The base class for all result types.
     /// </summary>
     [Immutable]
     public abstract class Result
@@ -25,7 +25,7 @@ namespace NautechSystems.CSharp
         /// <summary>
         /// Initializes a new instance of the <see cref="Result"/> class.
         /// </summary>
-        /// <param name="isFailure">The is failure boolean.</param>
+        /// <param name="isFailure">The is failure boolean flag.</param>
         /// <param name="error">The error string.</param>
         protected Result(bool isFailure, [CanBeNull] string error)
         {

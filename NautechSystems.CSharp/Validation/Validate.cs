@@ -33,8 +33,7 @@ namespace NautechSystems.CSharp.Validation
         {
             if (!predicate)
             {
-                throw new ArgumentException(
-                    $"{ExMessage} (The predicate based on {paramName} is false).", paramName);
+                throw new ArgumentException($"{ExMessage} (The predicate based on {paramName} is false).", paramName);
             }
         }
 
@@ -50,8 +49,7 @@ namespace NautechSystems.CSharp.Validation
         {
             if (condition && !predicate)
             {
-                throw new ArgumentException(
-                    $"{ExMessage} (The conditional predicate based on {paramName} is false).", paramName);
+                throw new ArgumentException($"{ExMessage} (The conditional predicate based on {paramName} is false).", paramName);
             }
         }
 
@@ -67,8 +65,7 @@ namespace NautechSystems.CSharp.Validation
         {
             if (argument == null)
             {
-                throw new ArgumentNullException(
-                    paramName, $"{ExMessage} (The {paramName} argument is null).");
+                throw new ArgumentNullException(paramName, $"{ExMessage} (The {paramName} argument is null).");
             }
         }
 
@@ -83,9 +80,27 @@ namespace NautechSystems.CSharp.Validation
         {
             if (string.IsNullOrWhiteSpace(argument))
             {
-                throw new ArgumentNullException(
-                    paramName, $"{ExMessage} (The {paramName} string argument is null or white space).");
+                throw new ArgumentNullException(paramName, $"{ExMessage} (The {paramName} string argument is null or white space).");
             }
+        }
+
+        /// <summary>
+        /// The validation passes if the struct argument is not the default value.
+        /// </summary>
+        /// <typeparam name="T">The argument type.</typeparam>
+        /// <param name="argument">The argument.</param>
+        /// <param name="paramName">The parameter name.</param>
+        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        [Conditional("DEBUG")]
+        [DebuggerStepThrough]
+        public static void NotDefault<T>(T argument, string paramName) where T : struct
+        {
+#if DEBUG
+            if (argument.Equals(default(T)))
+            {
+                throw new ArgumentException(paramName, $"{ExMessage} (The {paramName} is the default value).");
+            }
+#endif
         }
 
         /// <summary>
@@ -101,8 +116,7 @@ namespace NautechSystems.CSharp.Validation
         {
             if (collection == null)
             {
-                throw new ArgumentNullException(
-                    paramName, $"{ExMessage} (The {paramName} collection is null).");
+                throw new ArgumentNullException(paramName, $"{ExMessage} (The {paramName} collection is null).");
             }
 
             if (collection.Count == 0)

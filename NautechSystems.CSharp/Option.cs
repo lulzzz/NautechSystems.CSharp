@@ -48,7 +48,7 @@ namespace NautechSystems.CSharp
         public bool HasNoValue => !this.HasValue;
 
         /// <summary>
-        /// Returns an <see cref="Option{T}"/> with no value.
+        /// Returns a <see cref="Option{T}"/> with no value.
         /// </summary>
         /// <returns>An <see cref="Option{T}"/>.</returns>
         public static Option<T> None() => new Option<T>();

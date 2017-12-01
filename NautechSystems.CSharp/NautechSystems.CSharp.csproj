@@ -15,8 +15,10 @@
     <RepositoryUrl>https://github.com/nautechsystems/NautechSystems.CSharp</RepositoryUrl>
     <PackageTags>validation functional extensions</PackageTags>
     <Copyright>Copyright ©2017 Nautech Systems Pty Ltd.</Copyright>
-    <Version>1.1.1</Version>
-    <PackageReleaseNotes>Added XML documentation.</PackageReleaseNotes>
+    <Version>1.2.0</Version>
+    <PackageReleaseNotes>Added support for checking default values.</PackageReleaseNotes>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
