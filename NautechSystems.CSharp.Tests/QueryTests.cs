@@ -34,6 +34,23 @@ namespace NautechSystems.CSharp.Tests
         }
 
         [Fact]
+        public void Ok_WithGenericResultAndMessage_ReturnsOkWithMessage()
+        {
+            // Arrange
+            var message = "The query was successful.";
+            var testClass = new TestClass();
+
+            // Act
+            var result = Query<TestClass>.Ok(testClass, message);
+
+            // Assert
+            Assert.True(result.IsSuccess);
+            Assert.False(result.IsFailure);
+            Assert.Equal(testClass, result.Value);
+            Assert.Equal(message, result.Message);
+        }
+
+        [Fact]
         public void ActionInvoked_WithGenericNoValue_Throws()
         {
             // Arrange
@@ -45,22 +62,6 @@ namespace NautechSystems.CSharp.Tests
         }
 
         [Fact]
-        public void ActionInvoked_ResultWithNoError_Throws()
-        {
-            // Arrange
-            var result = Query<TestClass>.Ok(new TestClass());
-
-            Action action = () =>
-            {
-                var error = result.Error;
-            };
-
-            // Act
-            // Assert
-            Assert.Throws<InvalidOperationException>(() => action.Invoke());
-        }
-
-        [Fact]
         public void Fail_GenericWithValueInputs_ReturnsExpectedResult()
         {
             // Arrange
@@ -68,7 +69,7 @@ namespace NautechSystems.CSharp.Tests
             var result = Query<TestClass>.Fail("Error message");
 
             // Assert
-            Assert.Equal("Query Failure (Error message).", result.Error);
+            Assert.Equal("Query Failure (Error message).", result.Message);
             Assert.True(result.IsFailure);
             Assert.False(result.IsSuccess);
         }

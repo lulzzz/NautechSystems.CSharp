@@ -14,7 +14,8 @@ namespace NautechSystems.CSharp.Extensions
     using NautechSystems.CSharp.Validation;
 
     /// <summary>
-    /// The immutable static <see cref="QueryExtensions"/> class.
+    /// The immutable static <see cref="QueryExtensions"/> class. Provides useful 
+    /// <see cref="Query{T}"/> extension methods.
     /// </summary>
     [Immutable]
     public static class QueryExtensions
@@ -24,36 +25,36 @@ namespace NautechSystems.CSharp.Extensions
         /// </summary>
         /// <typeparam name="T">The T type.</typeparam>
         /// <typeparam name="K">The K type.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="func">The function.</param>
-        /// <returns>A <see cref="Query{T}"/></returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <param name="query">The query (cannot be null).</param>
+        /// <param name="func">The function (cannot be null).</param>
+        /// <returns>A <see cref="Query{T}"/> result.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Query<K> OnSuccess<T, K>(this Query<T> query, Func<T, K> func)
         {
             Validate.NotNull(query, nameof(query));
             Validate.NotNull(func, nameof(func));
 
             return query.IsFailure 
-                ? Query<K>.Fail(query.Error) 
+                ? Query<K>.Fail(query.Message) 
                 : Query<K>.Ok(func(query.Value));
         }
 
         /// <summary>
-        /// On success returns the function with the query value, otherwise returns a failure query.
+        /// On success returns the function with the query value (otherwise returns a failed query).
         /// </summary>
         /// <typeparam name="T">The T type.</typeparam>
         /// <typeparam name="K">The K type.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="func">The function.</param>
-        /// <returns>A <see cref="Query{T}"/></returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <param name="query">The query (cannot be null).</param>
+        /// <param name="func">The function (cannot be null).</param>
+        /// <returns>A <see cref="Query{T}"/> result.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Query<K> OnSuccess<T, K>(this Query<T> query, Func<T, Query<K>> func)
         {
             Validate.NotNull(query, nameof(query));
             Validate.NotNull(func, nameof(func));
 
             return query.IsFailure 
-                ? Query<K>.Fail(query.Error) 
+                ? Query<K>.Fail(query.Message) 
                 : func(query.Value);
         }
 
@@ -62,17 +63,17 @@ namespace NautechSystems.CSharp.Extensions
         /// </summary>
         /// <typeparam name="T">The T type.</typeparam>
         /// <typeparam name="K">The K type.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="func">The function.</param>
-        /// <returns>A <see cref="Query{T}"/></returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <param name="query">The query (cannot be null).</param>
+        /// <param name="func">The function (cannot be null).</param>
+        /// <returns>A <see cref="Query{T}"/> result.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Query<K> OnSuccess<T, K>(this Query<T> query, Func<Query<K>> func)
         {
             Validate.NotNull(query, nameof(query));
             Validate.NotNull(func, nameof(func));
 
             return query.IsFailure 
-                ? Query<K>.Fail(query.Error) 
+                ? Query<K>.Fail(query.Message) 
                 : func();
         }
 
@@ -80,10 +81,10 @@ namespace NautechSystems.CSharp.Extensions
         /// On success performs the given action, then returns the query.
         /// </summary>
         /// <typeparam name="T">The type.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="action">The action.</param>
-        /// <returns>A <see cref="Query{T}"/></returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <param name="query">The query (cannot be null).</param>
+        /// <param name="action">The action (cannot be null).</param>
+        /// <returns>A <see cref="Query{T}"/> result.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Query<T> OnSuccess<T>(this Query<T> query, Action<T> action)
         {
             Validate.NotNull(query, nameof(query));
@@ -101,10 +102,10 @@ namespace NautechSystems.CSharp.Extensions
         /// On failure performs the given action, then returns the query.
         /// </summary>
         /// <typeparam name="T">The type.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="action">The action.</param>
-        /// <returns>A <see cref="Query{T}"/></returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <param name="query">The query (cannot be null).</param>
+        /// <param name="action">The action (cannot be null).</param>
+        /// <returns>A <see cref="Query{T}"/> result.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Query<T> OnFailure<T>(this Query<T> query, Action action)
         {
             Validate.NotNull(query, nameof(query));
@@ -122,10 +123,10 @@ namespace NautechSystems.CSharp.Extensions
         /// On failure performs the given action, then returns the query.
         /// </summary>
         /// <typeparam name="T">The type.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="action">The action.</param>
-        /// <returns>A <see cref="Query{T}"/></returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <param name="query">The query (cannot be null).</param>
+        /// <param name="action">The action (cannot be null).</param>
+        /// <returns>A <see cref="Query{T}"/> result.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Query<T> OnFailure<T>(this Query<T> query, Action<string> action)
         {
             Validate.NotNull(query, nameof(query));
@@ -133,7 +134,7 @@ namespace NautechSystems.CSharp.Extensions
 
             if (query.IsFailure)
             {
-                action(query.Error);
+                action(query.Message);
             }
 
             return query;
@@ -144,10 +145,10 @@ namespace NautechSystems.CSharp.Extensions
         /// </summary>
         /// <typeparam name="T">The T type.</typeparam>
         /// <typeparam name="K">The K type.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="func">The function.</param>
+        /// <param name="query">The query (cannot be null).</param>
+        /// <param name="func">The function (cannot be null).</param>
         /// <returns>A type.</returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static K OnBoth<T, K>(this Query<T> query, Func<Query<T>, K> func)
         {
             Validate.NotNull(query, nameof(query));
@@ -160,19 +161,20 @@ namespace NautechSystems.CSharp.Extensions
         /// Evaluates the query and predicate.
         /// </summary>
         /// <typeparam name="T">The type.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="predicate">The predicate.</param>
-        /// <param name="errorMessage">The error message.</param>
-        /// <returns>A <see cref="Query{T}"/></returns>
-        /// <exception cref="ArgumentNullException">Throws if any argument is null.</exception>
+        /// <param name="query">The query (cannot be null).</param>
+        /// <param name="predicate">The predicate (cannot be null).</param>
+        /// <param name="errorMessage">The error message (cannot be null).</param>
+        /// <returns>A <see cref="Query{T}"/> result.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Query<T> Ensure<T>(this Query<T> query, Func<T, bool> predicate, string errorMessage)
         {
             Validate.NotNull(query, nameof(query));
+            Validate.NotNull(predicate, nameof(predicate));
             Validate.NotNull(errorMessage, nameof(errorMessage));
 
             if (query.IsFailure)
             {
-                return Query<T>.Fail(query.Error);
+                return Query<T>.Fail(query.Message);
             }
 
 
@@ -189,17 +191,17 @@ namespace NautechSystems.CSharp.Extensions
         /// </summary>
         /// <typeparam name="T">The T type.</typeparam>
         /// <typeparam name="K">The K type.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="func">The function.</param>
-        /// <returns>A <see cref="Query{T}"/></returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <param name="query">The query (cannot be null).</param>
+        /// <param name="func">The function (cannot be null).</param>
+        /// <returns>A <see cref="Query{T}"/> result.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Query<K> Map<T, K>(this Query<T> query, Func<T, K> func)
         {
             Validate.NotNull(query, nameof(query));
             Validate.NotNull(func, nameof(func));
 
             return query.IsFailure 
-                ? Query<K>.Fail(query.Error) 
+                ? Query<K>.Fail(query.Message) 
                 : Query<K>.Ok(func(query.Value));
         }
     }

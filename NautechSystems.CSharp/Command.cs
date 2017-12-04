@@ -22,50 +22,64 @@ namespace NautechSystems.CSharp
     [Immutable]
     public sealed class Command : Result
     {
-        private static readonly Command OkCommand = new Command(false, null);
+        private static readonly Command OkCommand = new Command(false, "None");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Command"/> class. 
         /// </summary>
         /// <param name="isFailure">The command is failure boolean flag.</param>
-        /// <param name="error">The command error string (can be null).</param>
-        private Command(bool isFailure, [CanBeNull] string error)
-            : base(isFailure, error)
+        /// <param name="message">The command message string.</param>
+        private Command(bool isFailure, string message)
+            : base(isFailure, message)
         {
         }
 
         /// <summary>
         /// Returns a success <see cref="Command"/> <see cref="Result"/>.
         /// </summary>
-        /// <returns>A <see cref="Command"/> result</returns>
+        /// <returns>A <see cref="Command"/> result.</returns>
         public static Command Ok()
         {
             return OkCommand;
         }
 
         /// <summary>
+        /// Returns a success <see cref="Command"/> <see cref="Result"/> with the given message.
+        /// </summary>
+        /// <param name="message">The command result message (cannot be null or white space).</param>
+        /// <returns>A <see cref="Command"/> result.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
+        public static Command Ok(string message)
+        {
+            Validate.NotNull(message, nameof(message));
+
+            return new Command(false, message);
+        }
+
+        /// <summary>
         /// Returns a failure <see cref="Command"/> <see cref="Result"/>.
         /// </summary>
-        /// <param name="error">The command error string.</param>
-        /// <returns>A <see cref="Command"/> result</returns>
-        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
-        public static Command Fail(string error)
+        /// <param name="errorMessage">The command result error message (cannot be null or white
+        /// space).</param>
+        /// <returns>A <see cref="Command"/> result.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
+        public static Command Fail(string errorMessage)
         {
-            Validate.NotNull(error, nameof(error));
+            Validate.NotNull(errorMessage, nameof(errorMessage));
 
-            return new Command(true, $"Command Failure ({error}).");
+            return new Command(true, $"Command Failure ({errorMessage}).");
         }
 
         /// <summary>
         /// Returns first failure in the list of <paramref name="commands"/> 
         /// (if there is no failure returns success.)
         /// </summary>
-        /// <param name="commands">The commands array.</param>
-        /// <returns>A <see cref="Command"/>.</returns>
-        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
+        /// <param name="commands">The commands array (cannot be null or empty).</param>
+        /// <returns>A <see cref="Command"/> result.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Command FirstFailureOrSuccess(params Command[] commands)
         {
-            Validate.NotNull(commands, nameof(commands));
+            Validate.CollectionNotNullOrEmpty(commands, nameof(commands));
 
             return commands.FirstOrDefault(c => c.IsFailure) ?? Ok();
         }
@@ -74,10 +88,9 @@ namespace NautechSystems.CSharp
         /// Returns combined result from all failures in the <paramref name="commands"/> list.
         /// If there is no failure then returns success.
         /// </summary>
-        /// <param name="commands">The commands array.</param>
+        /// <param name="commands">The commands array (cannot be null or empty).</param>
         /// <returns>A <see cref="Command"/> result.</returns>
-        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
-        /// <exception cref="ArgumentException">Throws if the commands array is empty.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Command Combine(params Command[] commands)
         {
             Validate.CollectionNotNullOrEmpty(commands, nameof(commands));
@@ -93,7 +106,7 @@ namespace NautechSystems.CSharp
 
         private static string CombineErrorMessages(IList<Command> failedResults)
         {
-            return string.Join("; ", failedResults.Select(x => x.Error.Split('(', ')')[1]));
+            return string.Join("; ", failedResults.Select(x => x.Message.Split('(', ')')[1]));
         }
     }
 }

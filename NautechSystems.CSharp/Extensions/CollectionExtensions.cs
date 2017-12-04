@@ -16,7 +16,8 @@ namespace NautechSystems.CSharp.Extensions
     using NautechSystems.CSharp.Validation;
 
     /// <summary>
-    /// The immutable static <see cref="CollectionExtensions"/> class.
+    /// The immutable static <see cref="CollectionExtensions"/> class. Provides useful generic
+    /// collection extension methods.
     /// </summary>
     [Immutable]
     public static class CollectionExtensions
@@ -24,11 +25,10 @@ namespace NautechSystems.CSharp.Extensions
         /// <summary>
         /// Returns the value of the last collection index.
         /// </summary>
-        /// <param name="collection">The collection.</param>
+        /// <param name="collection">The collection (cannot be null or empty).</param>
         /// <typeparam name="T">The collection type.</typeparam>
         /// <returns>An <see cref="int"/>.</returns>
-        /// <exception cref="ArgumentNullException">Throws if collection is null.</exception>
-        /// <exception cref="ArgumentException">Throws if collection is empty.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static int LastIndex<T>(this ICollection<T> collection)
         {
             Validate.CollectionNotNullOrEmpty(collection, nameof(collection));
@@ -39,13 +39,11 @@ namespace NautechSystems.CSharp.Extensions
         /// <summary>
         /// Returns the element at the given reverse index of a collection.
         /// </summary>
-        /// <param name="collection">The collection.</param>
-        /// <param name="index">The index.</param>
+        /// <param name="collection">The collection (cannot be null or empty).</param>
+        /// <param name="index">The index (cannot be negative).</param>
         /// <typeparam name="T">The collection type.</typeparam>
-        /// <returns>The element type.</returns>
-        /// <exception cref="ArgumentNullException">Throws if collection null.</exception>
-        /// <exception cref="ArgumentException">Throws if collection empty.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Throws if index out of range.</exception>
+        /// <returns>The element at the reverse index.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static T GetByReverseIndex<T>(this ICollection<T> collection, int index)
         {
             Validate.CollectionNotNullOrEmpty(collection, nameof(collection));
@@ -57,17 +55,12 @@ namespace NautechSystems.CSharp.Extensions
         /// <summary>
         /// Returns the element at the given shifted reverse index of a collection.
         /// </summary>
-        /// <param name="collection">The collection.</param>
-        /// <param name="index">The index.</param>
-        /// <param name="shift">The shift.</param>
+        /// <param name="collection">The collection (cannot be null or empty).</param>
+        /// <param name="index">The index (cannot be negative).</param>
+        /// <param name="shift">The shift (cannot be negative).</param>
         /// <typeparam name="T">The collection type.</typeparam>
-        /// <returns>The element type.</returns>
-        /// <exception cref="ArgumentNullException">Throws if collection null.</exception>
-        /// <exception cref="ArgumentException">Throws if collection empty.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Throws if index out of range.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Throws if shift out of range.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Throws if index + shift is greater than 
-        /// collection count.</exception>
+        /// <returns>The element at the shifted reverse index.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static T GetByShiftedReverseIndex<T>(this ICollection<T> collection, int index, int shift)
         {
             Validate.CollectionNotNullOrEmpty(collection, nameof(collection));
@@ -81,10 +74,10 @@ namespace NautechSystems.CSharp.Extensions
         /// <summary>
         /// Performs the action on each element in the <see cref="IEnumerable{T}"/> source.
         /// </summary>
-        /// <param name="source">The source.</param>
-        /// <param name="action">The action.</param>
+        /// <param name="source">The source (cannot be null).</param>
+        /// <param name="action">The action (cannot be null).</param>
         /// <typeparam name="T">The type.</typeparam>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             Validate.NotNull(source, nameof(source));

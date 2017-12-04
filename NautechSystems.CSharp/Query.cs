@@ -28,12 +28,13 @@ namespace NautechSystems.CSharp
         /// Initializes a new instance of the <see cref="Query{T}"/> class.
         /// </summary>
         /// <param name="isFailure">The is failure flag.</param>
-        /// <param name="value">The query value.</param>
-        /// <param name="error">The query error.</param>
+        /// <param name="value">The query value (cannot be null if successful).</param>
+        /// <param name="error">The query error (cannot be null or white space).</param>
+        /// <exception cref="ValidationException"> Throws if the validation fails.</exception>
         private Query(
             bool isFailure, 
             [CanBeNull] T value, 
-            [CanBeNull] string error) 
+            string error) 
             : base(isFailure, error)
         {
             if (!isFailure)
@@ -45,8 +46,8 @@ namespace NautechSystems.CSharp
         }
 
         /// <summary>
-        /// Gets the value (throws if null).
-        /// </summary>        
+        /// Gets the value (value cannot be null).
+        /// </summary>
         /// <returns>The query value.</returns>
         /// <exception cref="InvalidOperationException">Throws if the value is null.</exception>
         public T Value
@@ -63,22 +64,38 @@ namespace NautechSystems.CSharp
         /// <summary>
         /// Returns a success <see cref="Query{T}"/> <see cref="Result"/> with the given value.
         /// </summary>
-        /// <param name="value">The query value.</param>
+        /// <param name="value">The query value (cannot be null).</param>
         /// <returns>A <see cref="Query{T}"/> result.</returns>
-        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Query<T> Ok(T value)
         {
             Validate.NotNull(value, nameof(value));
 
-            return new Query<T>(false, value, null);
+            return new Query<T>(false, value, "None");
+        }
+
+        /// <summary>
+        /// Returns a success <see cref="Query{T}"/> <see cref="Result"/> with the given value and
+        /// message.
+        /// </summary>
+        /// <param name="value">The query value (cannot be null).</param>
+        /// <param name="message">The query message (cannot be null or white space).</param>
+        /// <returns>A <see cref="Query{T}"/> result.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
+        public static Query<T> Ok(T value, string message)
+        {
+            Validate.NotNull(value, nameof(value));
+            Validate.NotNull(message, nameof(message));
+
+            return new Query<T>(false, value, message);
         }
 
         /// <summary>
         /// Returns a failure <see cref="Query{T}"/> <see cref="Result"/> with the given error message.
         /// </summary>
-        /// <param name="error">The query error message.</param>
+        /// <param name="error">The query error message (cannot be null or white space).</param>
         /// <returns>A <see cref="Query{T}"/> result.</returns>
-        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Query<T> Fail(string error)
         {
             Validate.NotNull(error, nameof(error));

@@ -33,7 +33,6 @@ namespace NautechSystems.CSharp.Tests.ExtensionsTests
             Assert.True(testBool);
         }
 
-
         [Fact]
         public void OnFailure_WithFailure_InvokesAction()
         {

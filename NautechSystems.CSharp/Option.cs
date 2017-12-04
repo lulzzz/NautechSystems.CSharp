@@ -32,9 +32,9 @@ namespace NautechSystems.CSharp
         }
 
         /// <summary>
-        /// Gets the value of the <see cref="Option{T}"/>.
+        /// Gets the value of the <see cref="Option{T}"/> (value cannot be null).
         /// </summary>
-        /// <exception cref="ArgumentNullException">Throws if the value is null.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public T Value => this.GetValue();
 
         /// <summary>
@@ -50,15 +50,15 @@ namespace NautechSystems.CSharp
         /// <summary>
         /// Returns a <see cref="Option{T}"/> with no value.
         /// </summary>
-        /// <returns>An <see cref="Option{T}"/>.</returns>
+        /// <returns>A <see cref="Option{T}"/>.</returns>
         public static Option<T> None() => new Option<T>();
 
         /// <summary>
         /// Returns the given object wrapped in an <see cref="Option{T}"/>.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <returns>An <see cref="Option{T}"/>.</returns>
-        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
+        /// <param name="obj">The object (cannot be null).</param>
+        /// <returns>A <see cref="Option{T}"/>.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Option<T> Some(T obj)
         {
             Validate.NotNull(obj, nameof(obj));
@@ -70,19 +70,19 @@ namespace NautechSystems.CSharp
         /// The op_ implicit.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns>An <see cref="Option{T}"/>.</returns>
+        /// <returns>A <see cref="Option{T}"/>.</returns>
         public static implicit operator Option<T>([CanBeNull] T value)
         {
             return new Option<T>(value);
         }
 
         /// <summary>
-        /// The == operator.
+        /// The == operator implementation.
         /// </summary>
-        /// <param name="option">The <see cref="Option{T}"/>.</param>
-        /// <param name="value">The value.</param>
-        /// <returns>A <see cref="bool"/></returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <param name="option">The <see cref="Option{T}"/> (cannot be null).</param>
+        /// <param name="value">The value (cannot be null).</param>
+        /// <returns>A <see cref="bool"/>.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static bool operator ==(Option<T> option, T value)
         {
             Validate.NotNull(option, nameof(option));
@@ -92,12 +92,12 @@ namespace NautechSystems.CSharp
         }
 
         /// <summary>
-        /// The != operator.
+        /// The != operator implementation.
         /// </summary>
-        /// <param name="option">The <see cref="Option{T}"/>.</param>
-        /// <param name="value">The value.</param>
-        /// <returns>A <see cref="bool"/></returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <param name="option">The <see cref="Option{T}"/> (cannot be null).</param>
+        /// <param name="value">The value (cannot be null).</param>
+        /// <returns>A <see cref="bool"/>.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static bool operator !=(Option<T> option, T value)
         {
             Validate.NotNull(option, nameof(option));
@@ -107,12 +107,12 @@ namespace NautechSystems.CSharp
         }
 
         /// <summary>
-        /// The ==.
+        /// The == operator implementation.
         /// </summary>
-        /// <param name="left">The left <see cref="Option{T}"/>.</param>
-        /// <param name="right">The right <see cref="Option{T}"/>.</param>
-        /// <returns>A <see cref="bool"/></returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <param name="left">The left <see cref="Option{T}"/> (cannot be null).</param>
+        /// <param name="right">The right <see cref="Option{T}"/> (cannot be null).</param>
+        /// <returns>A <see cref="bool"/>.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static bool operator ==(Option<T> left, Option<T> right)
         {
             Validate.NotNull(left, nameof(left));
@@ -124,10 +124,10 @@ namespace NautechSystems.CSharp
         /// <summary>
         /// The !=.
         /// </summary>
-        /// <param name="left">The left <see cref="Option{T}"/>.</param>
-        /// <param name="right">The right <see cref="Option{T}"/>.</param>
-        /// <returns>A <see cref="bool"/></returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <param name="left">The left <see cref="Option{T}"/> (cannot be null).</param>
+        /// <param name="right">The right <see cref="Option{T}"/> (cannot be null).</param>
+        /// <returns>A <see cref="bool"/>.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static bool operator !=(Option<T> left, Option<T> right)
         {
             Validate.NotNull(left, nameof(left));
@@ -162,9 +162,9 @@ namespace NautechSystems.CSharp
         /// Determines whether the specified <see cref="Option{T}"/> 
         /// is equal to the current <see cref="Option{T}"/>.
         /// </summary>
-        /// <param name="other">The other object.</param>
+        /// <param name="other">The other object (cannot be null).</param>
         /// <returns>A <see cref="bool"/>.</returns>
-        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public bool Equals(Option<T> other)
         {
             Validate.NotNull(other, nameof(other));

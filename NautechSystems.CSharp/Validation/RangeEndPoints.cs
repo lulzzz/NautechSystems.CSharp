@@ -10,7 +10,7 @@
 namespace NautechSystems.CSharp.Validation
 {
     /// <summary>
-    /// The defined literal end points of a range.
+    /// The <see cref="RangeEndPoints"/> enumeration. The defined literal end points of a range.
     /// </summary>
     public enum RangeEndPoints
     {

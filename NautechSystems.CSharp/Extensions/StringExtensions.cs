@@ -11,12 +11,12 @@ namespace NautechSystems.CSharp.Extensions
 {
     using System;
     using System.Linq;
-    using System.Text;
     using NautechSystems.CSharp.Annotations;
     using NautechSystems.CSharp.Validation;
 
     /// <summary>
-    /// The immutable static <see cref="StringExtensions"/> class.
+    /// The immutable static <see cref="StringExtensions"/> class. Provides useful generic 
+    /// <see cref="String"/> extension methods.
     /// </summary>
     [Immutable]
     public static class StringExtensions
@@ -24,9 +24,9 @@ namespace NautechSystems.CSharp.Extensions
         /// <summary>
         /// Removes all whitespace from this string.
         /// </summary>
-        /// <param name="input">The input string.</param>
+        /// <param name="input">The input string (cannot be null or white space).</param>
         /// <returns>A <see cref="string"/>.</returns>
-        /// <exception cref="ArgumentNullException">Throws if the argument is null.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static string RemoveAllWhitespace(this string input)
         {
             Validate.NotNull(input, nameof(input));

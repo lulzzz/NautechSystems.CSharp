@@ -13,7 +13,8 @@ namespace NautechSystems.CSharp.Extensions
     using NautechSystems.CSharp.Annotations;
 
     /// <summary>
-    /// The immutable static <see cref="DecimalExtensions"/> class.
+    /// The immutable static <see cref="DecimalExtensions"/> class. Provides useful generic 
+    /// <see cref="Decimal"/> extension methods.
     /// </summary>
     [Immutable]
     public static class DecimalExtensions
@@ -22,7 +23,7 @@ namespace NautechSystems.CSharp.Extensions
         /// Returns the number of decimal places of this decimal number.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns> An <see cref="int"/>.</returns>
+        /// <returns> A <see cref="int"/>.</returns>
         public static int GetDecimalPlaces(this decimal value)
         {
             return BitConverter.GetBytes(decimal.GetBits(value)[3])[2];

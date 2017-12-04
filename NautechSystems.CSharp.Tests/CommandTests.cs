@@ -31,19 +31,17 @@ namespace NautechSystems.CSharp.Tests
         }
 
         [Fact]
-        public void ActionInvoked_WithNoValue_Throws()
+        public void Ok_WithMessage_ReturnsOkWithMessage()
         {
             // Arrange
-            var result = Command.Ok();
-
-            Action action = () =>
-            {
-                var error = result.Error;
-            };
+            var message = "The command was successful.";
 
             // Act
+            var result = Command.Ok(message);
+
             // Assert
-            Assert.Throws<InvalidOperationException>(() => action.Invoke());
+            Assert.True(result.IsSuccess);
+            Assert.Equal(message, result.Message);
         }
 
         [Fact]
@@ -54,7 +52,7 @@ namespace NautechSystems.CSharp.Tests
             var command = Command.Fail("error message");
 
             // Assert
-            Assert.Equal("Command Failure (error message).", command.Error);
+            Assert.Equal("Command Failure (error message).", command.Message);
             Assert.True(command.IsFailure);
             Assert.False(command.IsSuccess);
         }
@@ -85,7 +83,7 @@ namespace NautechSystems.CSharp.Tests
 
             // Assert
             Assert.True(result.IsFailure);
-            Assert.Equal("Command Failure (Failure 1).", result.Error);
+            Assert.Equal("Command Failure (Failure 1).", result.Message);
         }
 
         [Fact]
@@ -116,7 +114,7 @@ namespace NautechSystems.CSharp.Tests
 
             // Assert
             Assert.True(result.IsFailure);
-            Assert.Equal("Command Failure (error 1; error 2).", result.Error);
+            Assert.Equal("Command Failure (error 1; error 2).", result.Message);
         }
 
         [Fact]

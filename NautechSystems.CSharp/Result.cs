@@ -9,8 +9,6 @@
 
 namespace NautechSystems.CSharp
 {
-    using System;
-    using System.Diagnostics;
     using NautechSystems.CSharp.Annotations;
     using NautechSystems.CSharp.Validation;
 
@@ -20,23 +18,17 @@ namespace NautechSystems.CSharp
     [Immutable]
     public abstract class Result
     {
-        private readonly string error;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Result"/> class.
         /// </summary>
         /// <param name="isFailure">The is failure boolean flag.</param>
-        /// <param name="error">The error string.</param>
-        protected Result(bool isFailure, [CanBeNull] string error)
+        /// <param name="message">The message string.</param>
+        protected Result(bool isFailure, string message)
         {
-            if (isFailure)
-            {
-                Validate.NotNull(error, nameof(error));
-
-                this.error = error;
-            }
+            Debug.NotNull(message, nameof(message));
 
             this.IsFailure = isFailure;
+            this.Message = message;
         }
 
         /// <summary>
@@ -50,20 +42,8 @@ namespace NautechSystems.CSharp
         public bool IsSuccess => !this.IsFailure;
 
         /// <summary>
-        /// Gets the result error.
+        /// Gets the result message.
         /// </summary>
-        public string Error
-        {
-            [DebuggerStepThrough]
-            get
-            {
-                if (this.IsSuccess)
-                {
-                    throw new InvalidOperationException("There is no error message for success.");
-                }
-
-                return this.error;
-            }
-        }
+        public string Message { get; }
     }
 }

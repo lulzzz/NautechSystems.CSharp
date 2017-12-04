@@ -14,7 +14,8 @@ namespace NautechSystems.CSharp.Extensions
     using NautechSystems.CSharp.Validation;
 
     /// <summary>
-    /// The immutable static <see cref="OptionExtensions"/> class.
+    /// The immutable static <see cref="OptionExtensions"/> class. Provides useful 
+    /// <see cref="Option{T}"/> extension methods
     /// </summary>
     [Immutable]
     public static class OptionExtensions
@@ -22,11 +23,11 @@ namespace NautechSystems.CSharp.Extensions
         /// <summary>
         /// Converts an <see cref="Option{T}"/> to a <see cref="Query{T}"/> result.
         /// </summary>
-        /// <param name="option">The option.</param>
-        /// <param name="errorMessage">The error message.</param>
+        /// <param name="option">The option (cannot be null).</param>
+        /// <param name="errorMessage">The error message (cannot be null).</param>
         /// <typeparam name="T">The type.</typeparam>
         /// <returns>A <see cref="Query{T}"/>.</returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Query<T> ToResult<T>(this Option<T> option, string errorMessage)
         {
             Validate.NotNull(option, nameof(option));
@@ -40,11 +41,11 @@ namespace NautechSystems.CSharp.Extensions
         /// <summary>
         /// Unwraps the <see cref="Option{T}"/> returning the given default value if there is no value.
         /// </summary>
-        /// <param name="option">The option.</param>
+        /// <param name="option">The option (cannot be null).</param>
         /// <param name="defaultValue">The default Value.</param>
         /// <typeparam name="T">The type.</typeparam>
         /// <returns>A type.</returns>
-        /// <exception cref="ArgumentNullException">Throws if the option argument is null.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static T Unwrap<T>(this Option<T> option, [CanBeNull] T defaultValue = default(T))
         {
             Validate.NotNull(option, nameof(option));
@@ -55,13 +56,13 @@ namespace NautechSystems.CSharp.Extensions
         /// <summary>
         /// Unwraps the <see cref="Option{T}"/> returning the given default value if there is no value.
         /// </summary>
-        /// <param name="option">The option.</param>
-        /// <param name="selector">The selector.</param>
+        /// <param name="option">The option (cannot be null).</param>
+        /// <param name="selector">The selector (cannot be null).</param>
         /// <param name="defaultValue">The default value.</param>
         /// <typeparam name="T">The type.</typeparam>
         /// <typeparam name="K">The key type.</typeparam>
         /// <returns>A type.</returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static K Unwrap<T, K>(
             this Option<T> option, 
             Func<T, K> selector, 
@@ -77,14 +78,14 @@ namespace NautechSystems.CSharp.Extensions
 
         /// <summary>
         /// Where the <see cref="Option{T}"/> has no value then returns the default value for the type. 
-        /// Otherwise evaluates the given predicate and returns the <see cref="Option{T}"/> value, 
-        /// or the default value for the type.
+        /// Otherwise evaluates the given predicate and returns the <see cref="Option{T}"/> value 
+        /// (or the default value for the type).
         /// </summary>
-        /// <param name="option">The option.</param>
-        /// <param name="predicate">The predicate.</param>
+        /// <param name="option">The option (cannot be null).</param>
+        /// <param name="predicate">The predicate (cannot be null).</param>
         /// <typeparam name="T">The type.</typeparam>
-        /// <returns>An <see cref="Option{T}"/>.</returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <returns>A <see cref="Option{T}"/>.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Option<T> Where<T>(this Option<T> option, Func<T, bool> predicate)
         {
             Validate.NotNull(option, nameof(option));
@@ -104,12 +105,12 @@ namespace NautechSystems.CSharp.Extensions
         /// Selects the default value of the selector type if the <see cref="Option{K}"/> has no value,
         /// otherwise returns an <see cref="Option{K}"/>.
         /// </summary>
-        /// <param name="option">The option.</param>
-        /// <param name="selector">The selector.</param>
+        /// <param name="option">The option (cannot be null).</param>
+        /// <param name="selector">The selector (cannot be null).</param>
         /// <typeparam name="T">The type.</typeparam>
         /// <typeparam name="K">The key type.</typeparam>
-        /// <returns>An <see cref="Option{K}"/>.</returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <returns>A <see cref="Option{K}"/>.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Option<K> Select<T, K>(this Option<T> option, Func<T, K> selector)
         {
             Validate.NotNull(option, nameof(option));
@@ -123,12 +124,12 @@ namespace NautechSystems.CSharp.Extensions
         /// <summary>
         /// Selects ?
         /// </summary>
-        /// <param name="option">The option.</param>
-        /// <param name="selector">The selector.</param>
+        /// <param name="option">The option (cannot be null).</param>
+        /// <param name="selector">The selector (cannot be null).</param>
         /// <typeparam name="T">The type.</typeparam>
         /// <typeparam name="K">The option type.</typeparam>
-        /// <returns>An <see cref="Option{K}"/>.</returns>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <returns>A <see cref="Option{K}"/>.</returns>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static Option<K> Select<T, K>(this Option<T> option, Func<T, Option<K>> selector)
         {
             Validate.NotNull(option, nameof(option));
@@ -142,10 +143,10 @@ namespace NautechSystems.CSharp.Extensions
         /// <summary>
         /// Executes the given <see cref="Action{T}"/> where the <see cref="Option{T}"/> has a value.
         /// </summary>
-        /// <param name="option">The option.</param>
-        /// <param name="action">The action.</param>
+        /// <param name="option">The option (cannot be null).</param>
+        /// <param name="action">The action (cannot be null).</param>
         /// <typeparam name="T">The type.</typeparam>
-        /// <exception cref="ArgumentNullException">Throws if either argument is null.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         public static void Execute<T>(this Option<T> option, Action<T> action)
         {
             Validate.NotNull(option, nameof(option));
