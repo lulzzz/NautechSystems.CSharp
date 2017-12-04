@@ -11,6 +11,7 @@ namespace NautechSystems.CSharp.Tests
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using NautechSystems.CSharp.Validation;
     using Xunit;
 
     [SuppressMessage("StyleCop.CSharp.NamingRules", "*", Justification = "Reviewed. Suppression is OK within the Test Suite.")]
@@ -67,8 +68,8 @@ namespace NautechSystems.CSharp.Tests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => action1.Invoke());
-            Assert.Throws<ArgumentNullException>(() => action2.Invoke());
+            Assert.Throws<ValidationException>(() => action1.Invoke());
+            Assert.Throws<ValidationException>(() => action2.Invoke());
         }
 
         [Fact]

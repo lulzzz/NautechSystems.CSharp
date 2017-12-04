@@ -26,7 +26,9 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.True(false, "some_evaluation"));
+            var ex = Assert.Throws<ValidationException>(() => Debug.True(false, "some_evaluation"));
+
+            Assert.Equal(typeof(ArgumentException), ex.InnerException.GetType());
         }
 
         [Fact]
@@ -44,7 +46,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.TrueIf(true, false, "some_evaluation"));
+            Assert.Throws<ValidationException>(() => Debug.TrueIf(true, false, "some_evaluation"));
         }
 
         [Fact]
@@ -65,7 +67,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => Debug.NotNull(value, nameof(value)));
+            Assert.Throws<ValidationException>(() => Debug.NotNull(value, nameof(value)));
         }
 
         [Fact]
@@ -87,7 +89,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert - Ignore expression is always null warning (the point of the test is to catch this condition).
-            Assert.Throws<ArgumentNullException>(() => Debug.NotNull(obj, nameof(obj)));
+            Assert.Throws<ValidationException>(() => Debug.NotNull(obj, nameof(obj)));
         }
 
         [Fact]
@@ -120,7 +122,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.NotDefault(point, nameof(point)));
+            Assert.Throws<ValidationException>(() => Debug.NotDefault(point, nameof(point)));
         }
 
         [Fact]
@@ -142,7 +144,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.CollectionEmpty(collection, nameof(collection)));
+            Assert.Throws<ValidationException>(() => Debug.CollectionEmpty(collection, nameof(collection)));
         }
 
         [Fact]
@@ -153,7 +155,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => Debug.CollectionEmpty(collection, nameof(collection)));
+            Assert.Throws<ValidationException>(() => Debug.CollectionEmpty(collection, nameof(collection)));
         }
 
         [Fact]
@@ -175,7 +177,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => Debug.CollectionNotNullOrEmpty(collection, nameof(collection)));
+            Assert.Throws<ValidationException>(() => Debug.CollectionNotNullOrEmpty(collection, nameof(collection)));
         }
 
         [Fact]
@@ -186,7 +188,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.CollectionNotNullOrEmpty(collection, nameof(collection)));
+            Assert.Throws<ValidationException>(() => Debug.CollectionNotNullOrEmpty(collection, nameof(collection)));
         }
 
         [Fact]
@@ -197,7 +199,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => Debug.CollectionNotNullOrEmpty(dictionary, nameof(dictionary)));
+            Assert.Throws<ValidationException>(() => Debug.CollectionNotNullOrEmpty(dictionary, nameof(dictionary)));
         }
 
         [Fact]
@@ -208,7 +210,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.CollectionNotNullOrEmpty(dictionary, nameof(dictionary)));
+            Assert.Throws<ValidationException>(() => Debug.CollectionNotNullOrEmpty(dictionary, nameof(dictionary)));
         }
 
         [Fact]
@@ -220,7 +222,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.CollectionContains(element, nameof(element), collection));
+            Assert.Throws<ValidationException>(() => Debug.CollectionContains(element, nameof(element), collection));
         }
 
         [Fact]
@@ -256,7 +258,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.CollectionDoesNotContain(element, nameof(element), collection));
+            Assert.Throws<ValidationException>(() => Debug.CollectionDoesNotContain(element, nameof(element), collection));
         }
 
         [Fact]
@@ -292,7 +294,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.DictionaryContainsKey(key, nameof(key), collection));
+            Assert.Throws<ValidationException>(() => Debug.DictionaryContainsKey(key, nameof(key), collection));
         }
 
         [Fact]
@@ -316,7 +318,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.DictionaryDoesNotContainKey(key, nameof(key), collection));
+            Assert.Throws<ValidationException>(() => Debug.DictionaryDoesNotContainKey(key, nameof(key), collection));
         }
 
         [Fact]
@@ -352,7 +354,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.EqualTo(object1, nameof(object1), object2));
+            Assert.Throws<ValidationException>(() => Debug.EqualTo(object1, nameof(object1), object2));
         }
 
         [Fact]
@@ -364,7 +366,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.EqualTo(object1, nameof(object1), object2));
+            Assert.Throws<ValidationException>(() => Debug.EqualTo(object1, nameof(object1), object2));
         }
 
         [Fact]
@@ -400,7 +402,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.NotEqualTo(object1, nameof(object1), object2));
+            Assert.Throws<ValidationException>(() => Debug.NotEqualTo(object1, nameof(object1), object2));
         }
 
         [Fact]
@@ -412,7 +414,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => Debug.NotEqualTo(object1, nameof(object1), object2));
+            Assert.Throws<ValidationException>(() => Debug.NotEqualTo(object1, nameof(object1), object2));
         }
 
         [Theory]
@@ -438,7 +440,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.Int32NotOutOfRange(value, nameof(value), 0, 1));
+            Assert.Throws<ValidationException>(() => Debug.Int32NotOutOfRange(value, nameof(value), 0, 1));
         }
 
         [Theory]
@@ -463,7 +465,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.Int32NotOutOfRange(value, nameof(value), 0, 1, RangeEndPoints.LowerExclusive));
+            Assert.Throws<ValidationException>(() => Debug.Int32NotOutOfRange(value, nameof(value), 0, 1, RangeEndPoints.LowerExclusive));
         }
 
         [Theory]
@@ -488,7 +490,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.Int32NotOutOfRange(value, nameof(value), 0, 2, RangeEndPoints.UpperExclusive));
+            Assert.Throws<ValidationException>(() => Debug.Int32NotOutOfRange(value, nameof(value), 0, 2, RangeEndPoints.UpperExclusive));
         }
 
         [Theory]
@@ -514,7 +516,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.Int32NotOutOfRange(value, nameof(value), 0, 1, RangeEndPoints.Exclusive));
+            Assert.Throws<ValidationException>(() => Debug.Int32NotOutOfRange(value, nameof(value), 0, 1, RangeEndPoints.Exclusive));
         }
 
         [Theory]
@@ -544,7 +546,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.DoubleNotOutOfRange(value, nameof(value), 1, 2));
+            Assert.Throws<ValidationException>(() => Debug.DoubleNotOutOfRange(value, nameof(value), 1, 2));
         }
 
         [Theory]
@@ -573,7 +575,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.DoubleNotOutOfRange(value, nameof(value), 1, 2, RangeEndPoints.LowerExclusive));
+            Assert.Throws<ValidationException>(() => Debug.DoubleNotOutOfRange(value, nameof(value), 1, 2, RangeEndPoints.LowerExclusive));
         }
 
         [Theory]
@@ -601,7 +603,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.DoubleNotOutOfRange(value, nameof(value), 1, 2, RangeEndPoints.UpperExclusive));
+            Assert.Throws<ValidationException>(() => Debug.DoubleNotOutOfRange(value, nameof(value), 1, 2, RangeEndPoints.UpperExclusive));
         }
 
         [Theory]
@@ -631,7 +633,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.DoubleNotOutOfRange(value, nameof(value), 1, 2, RangeEndPoints.Exclusive));
+            Assert.Throws<ValidationException>(() => Debug.DoubleNotOutOfRange(value, nameof(value), 1, 2, RangeEndPoints.Exclusive));
         }
 
         [Theory]
@@ -654,7 +656,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.DoubleNotInvalidNumber(value, nameof(value)));
+            Assert.Throws<ValidationException>(() => Debug.DoubleNotInvalidNumber(value, nameof(value)));
         }
 
         [Theory]
@@ -678,7 +680,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.DecimalNotOutOfRange(value, nameof(value), 1, 2));
+            Assert.Throws<ValidationException>(() => Debug.DecimalNotOutOfRange(value, nameof(value), 1, 2));
         }
 
         [Theory]
@@ -701,7 +703,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.DecimalNotOutOfRange(value, nameof(value), 1, 2, RangeEndPoints.LowerExclusive));
+            Assert.Throws<ValidationException>(() => Debug.DecimalNotOutOfRange(value, nameof(value), 1, 2, RangeEndPoints.LowerExclusive));
         }
 
         [Theory]
@@ -723,7 +725,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.DecimalNotOutOfRange(value, nameof(value), 1, 2, RangeEndPoints.UpperExclusive));
+            Assert.Throws<ValidationException>(() => Debug.DecimalNotOutOfRange(value, nameof(value), 1, 2, RangeEndPoints.UpperExclusive));
         }
 
         [Theory]
@@ -747,7 +749,7 @@ namespace NautechSystems.CSharp.Tests.ValidationTests
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => Debug.DecimalNotOutOfRange(value, nameof(value), 1, 2, RangeEndPoints.Exclusive));
+            Assert.Throws<ValidationException>(() => Debug.DecimalNotOutOfRange(value, nameof(value), 1, 2, RangeEndPoints.Exclusive));
         }
     }
 }

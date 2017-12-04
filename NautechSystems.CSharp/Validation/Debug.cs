@@ -15,7 +15,10 @@ namespace NautechSystems.CSharp.Validation
     using NautechSystems.CSharp.Annotations;
 
     /// <summary>
-    /// The immutable static <see cref="Debug"/> class.
+    /// The immutable static <see cref="Debug"/> class. Provides validation methods which are compiled
+    /// and executed in debug configurations only. If validation passes the method does nothing. If 
+    /// the validation fails a <see cref="ValidationException"/> is throw which will contain the 
+    /// inner <see cref="ArgumentException"/> with details including a message and parameter name.
     /// </summary>
     [Immutable]
     public static class Debug
@@ -25,7 +28,7 @@ namespace NautechSystems.CSharp.Validation
         /// </summary>
         /// <param name="predicate">The predicate.</param>
         /// <param name="paramName">The parameter name.</param>
-        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void True(bool predicate, string paramName)
@@ -41,7 +44,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="condition">The condition.</param>
         /// <param name="predicate">The predicate.</param>
         /// <param name="paramName">The parameter name.</param>
-        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void TrueIf(bool condition, bool predicate, string paramName)
@@ -57,7 +60,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="argument">The argument.</param>
         /// <param name="paramName">The parameter name.</param>
         /// <typeparam name="T">The arguments type.</typeparam>
-        /// <exception cref="ArgumentNullException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void NotNull<T>(T argument, string paramName)
@@ -72,7 +75,7 @@ namespace NautechSystems.CSharp.Validation
         /// </summary>
         /// <param name="argument">The string argument.</param>
         /// <param name="paramName">The parameter name.</param>
-        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void NotNull(string argument, string paramName)
@@ -88,7 +91,7 @@ namespace NautechSystems.CSharp.Validation
         /// <typeparam name="T">The argument type.</typeparam>
         /// <param name="argument">The string argument.</param>
         /// <param name="paramName">The parameter name.</param>
-        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void NotDefault<T>(T argument, string paramName) where T : struct
@@ -104,8 +107,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="collection">The collection.</param>
         /// <param name="paramName">The parameter name.</param>
         /// <typeparam name="T">he type of collection.</typeparam>
-        /// <exception cref="ArgumentNullException">Throws if validation fails.</exception>
-        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void CollectionNotNullOrEmpty<T>(ICollection<T> collection, string paramName)
@@ -121,8 +123,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="collection">The collection.</param>
         /// <param name="paramName">The parameter name.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
-        /// <exception cref="ArgumentNullException">Throws if validation fails.</exception>
-        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void CollectionEmpty<T>(ICollection<T> collection, string paramName)
@@ -139,7 +140,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="paramName">The parameter name.</param>
         /// <param name="collection">The collection.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
-        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void CollectionContains<T>(T element, string paramName, ICollection<T> collection)
@@ -156,7 +157,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="paramName">The parameter name.</param>
         /// <param name="collection">The collection.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
-        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void CollectionDoesNotContain<T>(T element, string paramName, ICollection<T> collection)
@@ -174,7 +175,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="collection">The collection.</param>
         /// <typeparam name="T1">The type of the keys.</typeparam>
         /// <typeparam name="T2">The type of the values</typeparam>
-        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void DictionaryContainsKey<T1, T2>(T1 key, string paramName, IDictionary<T1, T2> collection)
@@ -192,7 +193,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="collection">The collection.</param>
         /// <typeparam name="T1">The type of the keys.</typeparam>
         /// <typeparam name="T2">The type of the values.</typeparam>
-        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void DictionaryDoesNotContainKey<T1, T2>(T1 key, string paramName, IDictionary<T1, T2> collection)
@@ -208,7 +209,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="obj">The input object.</param>
         /// <param name="paramName">The parameter name.</param>
         /// <param name="objNotToEqual">The other object not to equal.</param>
-        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void NotEqualTo(object obj, string paramName, object objNotToEqual)
@@ -224,7 +225,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="obj">The input object.</param>
         /// <param name="paramName">The parameter name.</param>
         /// <param name="objToEqual">The other object to be equal to.</param>
-        /// <exception cref="ArgumentException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void EqualTo(object obj, string paramName, object objToEqual)
@@ -242,7 +243,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="lowerBound">The range lower bound.</param>
         /// <param name="upperBound">The range upper bound.</param>
         /// <param name="endPoints">The range end points literal.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void Int32NotOutOfRange(
@@ -265,7 +266,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="lowerBound">The range lower bound.</param>
         /// <param name="upperBound">The range upper bound.</param>
         /// <param name="endPoints">The range end points literal.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void DoubleNotOutOfRange(
@@ -288,7 +289,7 @@ namespace NautechSystems.CSharp.Validation
         /// <param name="lowerBound">The range lower bound.</param>
         /// <param name="upperBound">The range upper bound.</param>
         /// <param name="endPoints">The range end points literal.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void DecimalNotOutOfRange(
@@ -308,7 +309,7 @@ namespace NautechSystems.CSharp.Validation
         /// </summary>
         /// <param name="value">The value to be checked.</param>
         /// <param name="paramName">The parameter name.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Throws if validation fails.</exception>
+        /// <exception cref="ValidationException">Throws if the validation fails.</exception>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         public static void DoubleNotInvalidNumber(double value, string paramName)

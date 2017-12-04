@@ -28,7 +28,7 @@ namespace NautechSystems.CSharp.Tests.ExtensionsTests
         [InlineData("A", "A")]
         [InlineData("123 123 1adc \n 222", "1231231adc222")]
         [InlineData("  123 123 1adc \n 222   ", "1231231adc222")]
-        public void RemoveWhiteSpace_WithVariousInputs_ReturnsStringWithNoWhiteSpace(string input, string expected)
+        internal void RemoveWhiteSpace_WithVariousInputs_ReturnsStringWithNoWhiteSpace(string input, string expected)
         {
             // Arrange
             // Act
