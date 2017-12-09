@@ -14,7 +14,7 @@ namespace NautechSystems.CSharp
     using NautechSystems.CSharp.Validation;
 
     /// <summary>
-    /// The immutable option structure. Wraps a potentially null value.
+    /// The immutable <see cref="Option{T}"/> structure. Wraps a potentially null value.
     /// </summary>
     /// <typeparam name="T">The option type.</typeparam>
     [Immutable]
